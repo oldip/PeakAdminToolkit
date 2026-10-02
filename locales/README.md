@@ -5,10 +5,10 @@ languages are en, zh-CN and zh-TW. Translate values only. Keep {0}/{1} parameter
 escaped newlines and literal escaped braces. Do not translate API identifiers
 inserted as parameters: they identify the game member that failed.
 
-From the version folder, run:
+From the repository root, run:
 
 ```powershell
-.\tests\run.ps1 -TranslationsOnly
+.\tests\run.ps1 -TranslationsOnly -ManagedDirectory <PEAK_Data/Managed>
 ```
 
 This checks matching keys, duplicate keys, nonempty values, placeholders,
@@ -29,6 +29,6 @@ should name the locale, include the test result and note any UI check performed.
 | Void | 地深冥渊 | 地深冥淵 | Hidden route endpoint |
 
 All text remains embedded at build time; no translation config is exported.
-Adding a new language still requires the explicit registration listed in
-CONTRIBUTING.md. Source-mod description files remain separate under
+New languages require registration in Localization.cs, Config.cs, build.ps1
+and tests/run.ps1. Source-mod description files remain separate under
 data/descriptions and retain their original hashes.

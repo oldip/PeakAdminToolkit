@@ -4,7 +4,7 @@ $tempRoot = [IO.Path]::GetFullPath([IO.Path]::GetTempPath()).TrimEnd([IO.Path]::
 $fixture = Join-Path $tempRoot ('PeakAdminToolkit-package-test-' + [Guid]::NewGuid().ToString('N'))
 try {
     New-Item -ItemType Directory -Path $fixture | Out-Null
-    foreach ($file in @('README.md','ARCHITECTURE.md','CHANGELOG.md','TESTING.md','THIRD_PARTY_NOTICES.md','CONTRIBUTING.md','LICENSE','README.zh-TW.md','build.cmd','build.ps1','package.ps1','.gitignore','.gitattributes')) {
+    foreach ($file in @('README.md','CHANGELOG.md','THIRD_PARTY_NOTICES.md','CONTRIBUTING.md','LICENSE','README.zh-TW.md','build.cmd','build.ps1','package.ps1','.gitignore','.gitattributes')) {
         Copy-Item -LiteralPath (Join-Path $root $file) -Destination $fixture
     }
     foreach ($directory in @('src','data','tests','locales','docs','.github')) {

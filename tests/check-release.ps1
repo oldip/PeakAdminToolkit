@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 $root = Split-Path $PSScriptRoot -Parent
-foreach ($file in @('README.md','CHANGELOG.md','TESTING.md','ARCHITECTURE.md')) {
+foreach ($file in @('README.md','README.zh-TW.md','CHANGELOG.md')) {
     $text = Get-Content -LiteralPath (Join-Path $root $file) -Raw
     if ($text -notmatch '0\.8\.1') { throw "Release label missing: $file" }
 }
@@ -27,7 +27,7 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 $zip = [IO.Compression.ZipFile]::OpenRead($archive)
 try {
     $names = @($zip.Entries | ForEach-Object { $_.FullName.Replace('\','/') })
-    foreach ($path in @('LICENSE','README.zh-TW.md','.gitignore','.github/ISSUE_TEMPLATE/bug_report.md','.github/ISSUE_TEMPLATE/translation.md','.github/pull_request_template.md','docs/PEAK_ITEM_TOOLTIP_LICENSE.txt','docs/GITHUB_RELEASE.md')) {
+    foreach ($path in @('LICENSE','README.zh-TW.md','.gitignore','.github/ISSUE_TEMPLATE/bug_report.md','.github/ISSUE_TEMPLATE/translation.md','.github/pull_request_template.md','docs/PEAK_ITEM_TOOLTIP_LICENSE.txt')) {
         if ($names -notcontains "PeakAdminToolkit-0.8.1-source/$path") { throw "Missing GitHub package file: $path" }
     }
     foreach ($entry in $zip.Entries) {

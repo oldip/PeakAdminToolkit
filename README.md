@@ -54,8 +54,7 @@ Requires Windows, a .NET SDK and local PEAK/BepInEx references.
 ```
 
 The built DLL is in `out/`. Translation sources are in `locales/`.
-See [TESTING.md](TESTING.md) for test results and [ARCHITECTURE.md](ARCHITECTURE.md)
-for module/API details.
+See [CONTRIBUTING.md](CONTRIBUTING.md) to contribute code or translations.
 
 ## License
 

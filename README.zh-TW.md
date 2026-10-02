@@ -52,7 +52,7 @@ Host、Client 都可提出生成、復活與傳送請求；自身工具只作用
 ```
 
 建置結果位於 `out/`，翻譯原始碼位於 `locales/`。
-測試結果見 [TESTING.md](TESTING.md)，模組與 API 說明見 [ARCHITECTURE.md](ARCHITECTURE.md)。
+程式碼與翻譯貢獻方式見 [貢獻指南](docs/CONTRIBUTING.zh-TW.md)。
 
 ## 授權
 
