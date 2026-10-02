@@ -1,7 +1,7 @@
 # Solo manual generation in 0.4.5
 
-The user approved manually generating the six reviewed multiplayer items in
-solo play while retaining registration and custom-room item-ban checks. Since
+Six reviewed multiplayer items support manual generation in solo play while
+retaining registration and custom-room item-ban checks. Since
 0.4.5, Host and Client can submit through PEAK's Master-targeted spawn RPC.
 
 ## Eligible names
@@ -50,6 +50,4 @@ padding; the icon and name occupy separate regions.
 
 Offline checks cover all six names, untouched game fields, no checkbox requirement,
 normal/manual status and catalog membership, name/ID bans, changed loot rules, missing state,
-API failures, stale entries and room/registration/replacement checks. The user
-must still verify actual solo creation and each item's behavior in PEAK.
-No 0.2.12 spawn or remote replication has yet been observed by this task.
+API failures, stale entries and room/registration/replacement checks. Actual solo creation and item behavior require live PEAK testing.

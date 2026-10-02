@@ -1,7 +1,7 @@
 # 0.2.10 observed validity and solo restriction review
 
-Read-only review on 2026-09-29. The user reports previously absent multiplayer
-items are now visible. This is user-reported visibility, not a screenshot or
+Read-only review on 2026-09-29. Manual test reports indicate previously absent multiplayer
+items are now visible. This is reported visibility, not a screenshot or
 proof of generation success.
 
 The installed log identifies 0.2.10. Earlier loads in this log report 44
@@ -41,7 +41,7 @@ useOtherItemForSpawningValidity is empty in the inspected resources.assets.
 
 PEReader inspection shows LootData.IsValidToSpawn reads banInSolo,
 PhotonNetwork.OfflineMode, InRoom and CurrentRoom.PlayerCount. Item.IsValidToSpawn
-also consults RunSettings and LootData. This supports the user's explanation
+also consults RunSettings and LootData. This supports the observed behavior
 of the restriction in a one-player session.
 
 SpawnItemInHand sends RPC_SpawnItemInHandMaster. That receiver calls

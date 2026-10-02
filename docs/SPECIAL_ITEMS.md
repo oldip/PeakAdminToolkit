@@ -88,7 +88,7 @@ Guidebook components, distinct item IDs and empty replacement references.
 They expose the inherited Item fields/methods to the existing adapter. This
 corrects the earlier Fannypack assessment; no new spawn API or bypass is used.
 
-The user reports Scroll/pages are also present in solo play. They are grouped
+Manual test reports indicate Scroll/pages are also present in solo play. They are grouped
 as Miscellaneous for browsing, without inferring any particular runtime
 validity result. Page names remain supplied by PEAK localization; the embedded
 Scroll/Torn Page descriptions already explain their relationship.

@@ -1,7 +1,7 @@
 # Release readiness (reviewed 2026-10-02)
 
-0.8.1 is a private preview with an audit of the current features. It is not a
-public 1.0 release and this task does not publish it.
+0.8.1 is a preview release. The live regression checklist below must be completed
+before 1.0.0.
 
 ## Source and data
 
@@ -9,15 +9,14 @@ public 1.0 release and this task does not publish it.
 |---|---|---|
 | C# implementation | Clean-room project source | Old 1.8.2 methods are not copied; existing adapter tests retained |
 | locales/*.json | Project interface translations | Separate language files, matching keys/placeholders and fallback checks |
-| Three TSVs | User-identified project-owned data | Original hashes retained; not embedded in the DLL |
-| Two description JSONs | User-supplied output of Peak Item Tooltip | Original hashes retained; parsed content matches pinned MIT upstream; notice included |
+| Three TSVs | Project-owned data | Original hashes retained; not embedded in the DLL |
+| Two description JSONs | Preserved output of Peak Item Tooltip | Original hashes retained; parsed content matches pinned MIT upstream; notice included |
 | Icons | PEAK runtime textures | No icon image files are packaged |
 | PEAK/Unity/BepInEx/Harmony/JSON DLLs | Local build/runtime references | Excluded from source package; no dependency DLL distribution |
 
 Description attribution is recorded in THIRD_PARTY_NOTICES.md. Parsed contents of
 both supplied JSONs match upstream revision cb00e7425a89b1bae091a50fe3ebfd9684445c7f.
-Original bytes are preserved. The upstream MIT notice is included. The owner
-selected MIT for this project's source and translations; LICENSE is included.
+Original bytes are preserved. The upstream MIT notice is included. Project source and interface translations use MIT; LICENSE is included.
 
 Original supplied data hashes:
 
@@ -41,7 +40,7 @@ Original supplied data hashes:
 - Naturally spawned friendship horn: use while held, compare the bar before
   and after dropping/picking up, with the toolkit enabled and disabled.
 
-Prior user reports establish that item generation and local self tools can work
+Prior manual test results establish that item generation and local self tools can work
 as Client, own cleanse works, remote cleanse does not, Host transfer attempts
 failed, and basic 0.4.7 revival/teleport became usable. They do not establish
 every current-version combination. Record role, game build, toolkit version,

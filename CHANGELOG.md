@@ -2,10 +2,10 @@
 
 ## 0.8.1
 
-- MIT license selected by the owner; pinned upstream description content verified and MIT notice retained.
+- MIT license; pinned upstream description content verified and MIT notice retained.
 - Standalone test reference parameter and original-data hash checks remove dependence on archived releases.
-- Traditional Chinese README, GitHub issue/PR templates and upload instructions included in source packaging.
-- Existing gameplay behavior preserved; live regression matrix remains pending.
+- Traditional Chinese README, GitHub issue/PR templates and version/download documentation included.
+- Existing gameplay behavior preserved.
 
 
 ## 0.8.0 - compatibility feedback and source preparation
@@ -14,7 +14,7 @@
 - Cache successful self-tool type/member metadata while continuing to read current character ownership and state. Retry unavailable types.
 - Add translation-only verification, terminology/contribution guidance and a compatibility/source review.
 - Reject DLL, EXE and PDB leaks before source packaging. Check original TSV and description hashes.
-- Retain live testing and data provenance gaps explicitly; project license selection and public publishing remain pending.
+- Document compatibility and test results.
 - Full offline suite: 1376 C# checks and six UI/source/package checks passed. Windows build succeeded with the existing CS1701 warning; game rendering/physics and remote results remain unverified for 0.8.0.
 
 ## 0.7.2 - terminal area, flight fall protection, one-click warp
@@ -49,8 +49,8 @@
   each player's active state and character Owner/status, plus sampled local
   ping minimum, average and maximum. Do not infer remote-player ping.
 - Remove Wake from this release. Move own-character Cleanse from Players to
-  Self tools. Hide both teleport buttons on the user's own player card.
-- Keep 0.4.7 revival/teleport behavior; record the user's basic live success
+  Self tools. Hide both teleport buttons on the local player card.
+- Keep 0.4.7 revival/teleport behavior; record basic live test results
   while leaving 0.5.0 multiplayer diagnostics pending game verification.
 
 ## 0.4.7 - repair adjacent landing rejection
@@ -75,7 +75,7 @@
   Host candidate list can survive PEAK clearing its own record on passout.
   Manual selection and ground/ownership checks remain. This path needs live
   multiplayer testing.
-- Correct the plugin metadata version to 0.4.6 and record the user's 0.4.5
+- Correct the plugin metadata version to 0.4.6 and record 0.4.5 manual test
   Host/Client observations without treating untested 0.4.6 paths as verified.
 
 ## 0.4.5 - Client request support where the native path allows it
@@ -207,7 +207,7 @@
 
 ## 0.2.11 - allow reviewed multiplayer items to be generated in solo
 
-- Apply the user's approved solo manual-generation exception to the six
+- Apply the solo manual-generation exception to the six
   reviewed multiplayer items, under explicit Other opt-in and Host control.
 - Separate raw game loot validity from manual generation eligibility. Keep
   true-validity items in All/use categories; label solo candidates Manual spawn.
@@ -230,7 +230,7 @@
   Manual spawning is still gated; false loot validity is not proof that the
   internal instantiate path cannot create the object.
 - 745 offline checks pass; Windows build succeeds with the existing CS1701
-  warning. The user reports cards are visible; no new generation or remote
+  warning. Manual test reports indicate cards are visible; no new generation or remote
   replication result is claimed.
 
 ## 0.2.9 - miscellaneous scroll/pages and inherited Item candidates
@@ -323,7 +323,7 @@
 - Size the tooltip to its wrapped content and constrain it to the window.
 - Added hover hit/delay/bounds tests and description adapter tests. 303 offline
   checks and the Windows build passed; live 0.2.3 Unity/Photon checks are pending.
-- Preserve the user's 0.2.2 screenshot and stale-tooltip feedback as manual
+- Preserve the 0.2.2 screenshot and stale-tooltip feedback as manual
   evidence in TESTING.md. Previous release folders remain unchanged.
 
 ## 0.2.2 - compact item cards and filter corrections

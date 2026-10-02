@@ -41,7 +41,7 @@ Newtonsoft/netstandard CS1701 warning is non-fatal.
 - Previous flight grace-period/reset, stamina cap, Host/Client gating,
   item visibility/search, revival/teleport and World warp tests remain included.
 
-## Manual checks and retained user reports
+## Manual checks and manual test results
 
 0.8.1 has not been manually tested in PEAK. Check new long API error text at
 1080p/1440p in all three languages. Translation tests do not verify wrapping.

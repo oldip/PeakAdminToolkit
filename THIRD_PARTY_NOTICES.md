@@ -1,6 +1,6 @@
 # Third-party notices
 
-## User-supplied description data
+## Preserved description data
 
 The English and Simplified JSON files in data/descriptions/ were supplied from another
 mod's BepInEx/config output. Original bytes are preserved:
@@ -26,7 +26,7 @@ method bodies were read or copied for this attribution check.
 
 ## Local dependencies
 
-Build uses the tester's PEAK, BepInEx, Harmony, Unity and Newtonsoft.Json
+Build uses locally installed PEAK, BepInEx, Harmony, Unity and Newtonsoft.Json
 references. No dependency DLL is redistributed. Runtime uses the game's
 existing Newtonsoft.Json 13.0.0.0.
 
@@ -37,5 +37,4 @@ are retained for provenance. Old 1.8.2 supplies category/behavior data without
 copying its methods.
 
 Project-owned source and interface translations are MIT licensed under LICENSE.
-Game and dependency ownership is not transferred by this license. This version
-has not been publicly published.
+Game and dependency ownership is not transferred by this license.

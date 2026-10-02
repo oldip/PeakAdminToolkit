@@ -1,43 +1,59 @@
 # PEAK Admin Toolkit 0.8.1
 
-[English](README.md) · [翻譯貢獻](docs/CONTRIBUTING.zh-TW.md) · [測試紀錄](TESTING.md)
+[English](README.md) · [下載](https://github.com/oldip/PeakAdminToolkit/releases) · [翻譯貢獻](docs/CONTRIBUTING.zh-TW.md)
 
-PEAK 的 BepInEx 管理工具預覽版。F8 開啟物品卡片、自身工具、玩家與世界操作。
-介面支援英文、簡體與繁體中文，依解析度縮放。
+PEAK 的 BepInEx 管理工具。按 **F8** 開啟介面，視窗依解析度縮放。
+支援英文、簡體與繁體中文。
+
+## 功能
+
+| 頁面 | 功能 |
+|---|---|
+| 概覽 | 目前語言與 Host／Client 狀態 |
+| 物品 | 物品卡片、遊戲圖示、分類、多語言搜尋與生成 |
+| 自身工具 | 無敵、無限體力、飛行、免摔傷、清除負面狀態 |
+| 玩家 | 正常／無懲罰復活、雙向傳送、勾選掉落物找回 |
+| 世界 | 當天時刻調整、全隊傳送至下一區營火旁或山頂 |
+
+Host、Client 都可提出生成、復活與傳送請求；自身工具只作用於自己。
+掉落物找回與世界操作需要 Host。
+
+無懲罰復活略過新增詛咒與飢餓，不保證補滿體力或移除既有狀態。
+飛行保留碰撞，飛行中及結束後兩秒免摔傷。全隊跳區不會點燃營火。
+特殊變體、未使用物品與大廳玩具可在「其他」篩選中開啟。
 
 ## 安裝
 
-關閉 PEAK，將建置出的 `out/PeakAdminToolkit.dll` 放入 `BepInEx/plugins`。
-只保留一個工具版本。一般使用只需要這個 DLL，描述與介面翻譯已內建。
-自身工具預設關閉；關閉視窗仍保持開啟中的工具，停用模組或切換場景會恢復狀態。
+1. 安裝 PEAK 的 BepInEx。
+2. 從 Releases 下載 `PeakAdminToolkit-0.8.1.zip` 並解壓。
+3. 關閉 PEAK，將 `PeakAdminToolkit.dll` 放入 `BepInEx/plugins`。
+4. 啟動遊戲，按 F8。只保留一個工具版本。
 
-## 權限與限制
+描述與介面翻譯已內建，執行時只需要工具 DLL。
+自身工具預設關閉；關閉視窗仍保持開啟中的工具，停用模組或切換場景會重設。
 
-- Host、Client 都可提出物品生成、復活與傳送請求；遠端結果須看對方畫面。
-- 無敵、體力、飛行、免摔傷及清除負面狀態作用於自己的角色。
-- 掉落物找回、時刻與全隊跳區需要 Host；跳區不會點燃營火。
-- 無懲罰復活略過新增詛咒與飢餓，不清除既有狀態或補滿體力。
-- 飛行保留碰撞；飛行期間及結束後兩秒自動免摔傷。
-- 成為房主是嘗試操作，已有人測試失敗。
+## 設定
 
-完整功能與 API 限制見 [英文說明](README.md) 及 [相容性](docs/COMPATIBILITY.md)。
+| 設定 | 選項 |
+|---|---|
+| General.Enabled | 啟用／停用工具 |
+| Interface.ToggleKey | 預設 F8；None 停用快捷鍵 |
+| Interface.Language | Auto、en、zh-CN、zh-TW；Auto 跟隨 PEAK |
 
-## 建置與測試
+## 建置
 
-需要 Windows、.NET SDK、自己安裝的 PEAK 與 BepInEx。不得上傳遊戲 DLL。
+需要 Windows、.NET SDK，以及本機 PEAK／BepInEx 參考檔。
 
 ```powershell
-.\tests\run.ps1 -ManagedDirectory '你的 PEAK_Data\Managed' -BepInExCoreDirectory '你的 BepInEx\core'
-.\build.cmd -ManagedDirectory '你的 PEAK_Data\Managed' -ReferenceDirectory '你的 BepInEx\core'
+.\tests\run.ps1 -ManagedDirectory '<PEAK>\PEAK_Data\Managed' -BepInExCoreDirectory '<PEAK>\BepInEx\core'
+.\build.cmd -ManagedDirectory '<PEAK>\PEAK_Data\Managed' -ReferenceDirectory '<PEAK>\BepInEx\core'
 .\package.ps1
 .\tests\check-release.ps1
 ```
 
-翻譯檔位於 `locales/`，修改後執行 `tests/run.ps1 -TranslationsOnly -ManagedDirectory ...`。
-透過 Pull Request 貢獻翻譯，不需改 C# 的既有語言文字。
+建置結果位於 `out/`，翻譯原始碼位於 `locales/`。
+測試結果見 [TESTING.md](TESTING.md)，模組與 API 說明見 [ARCHITECTURE.md](ARCHITECTURE.md)。
 
-## 授權與發布狀態
+## 授權
 
-專案採 MIT；第三方描述保留原作者 MIT 聲明，見 [來源聲明](THIRD_PARTY_NOTICES.md)。
-0.8.1 是預覽版，尚有遊戲內回歸測試，不能視為 1.0.0 全面驗證。
-GitHub 上傳方式及剩餘清單見 [發布指南](docs/GITHUB_RELEASE.md)。
+[MIT](LICENSE)。物品描述致謝與授權見 [來源聲明](THIRD_PARTY_NOTICES.md)。

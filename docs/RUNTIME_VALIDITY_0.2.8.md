@@ -1,6 +1,6 @@
 # Observed 0.2.8 validity reports
 
-The user loaded 0.2.8 and enabled diagnostics. Read-only log review found two
+In a 0.2.8 diagnostic session, Read-only log review found two
 complete reports with the same results: 28 registered candidates, 23 true,
 5 false, 0 unknown. These are real API returns, unlike offline test fixtures.
 

@@ -188,7 +188,7 @@ The card viewport, per-card hover identity and one-second delay retain prior
 behavior. Navigation, filtering, scrolling, refresh, language/resolution changes
 and open/close reset hover. Game textures are borrowed; no icons are packaged.
 
-Prior read-only metadata inspection established game API shapes. The user's
+Prior read-only metadata inspection established game API shapes. The captured
 0.2.3 feedback established that available native description APIs did not yield
 usable text. Supplied description data fills that gap. Its gameplay values
 were not independently measured.
