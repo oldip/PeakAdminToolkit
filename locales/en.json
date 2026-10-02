@@ -1,6 +1,6 @@
 {
   "Heading": "Admin Toolkit",
-  "Foundation": "0.8.1 preview",
+  "Foundation": "0.8.2 preview",
   "RoomRoleLabel": "Room role: {0}",
   "RoomRoleHost": "Host",
   "RoomRoleClient": "Client",
@@ -144,7 +144,7 @@
   "WorldCurrentSegment": "Current area: {0}",
   "WorldNextSegment": "Next area: {0}",
   "WorldAdvance": "Warp team toward next area",
-  "WorldAdvanceHelp": "The Host can warp the team to the next-area campfire, or near the summit. Nothing is lit automatically.",
+  "WorldAdvanceHelp": "The Host can warp the team to the next-area campfire, summit or Void exit portal.",
   "WorldAdvanceSubmitted": "Warp requests sent; check every player's landing and light the campfire yourselves.",
   "WorldAdvanceFailed": "Unlit campfire, safe ground or player warp unavailable. Check the BepInEx log.",
   "WorldPeakSubmitted": "Summit warp requests sent; check every player's landing.",
@@ -154,13 +154,15 @@
   "WorldTimeApiUnavailable": "Time control is unavailable in this PEAK build.",
   "WorldMapApiUnavailable": "Map control is unavailable in this PEAK build or scene.",
   "WorldNoNextSegment": "No supported next area from the summit; use the game's hidden-area entrance.",
-  "WorldNoNextSegmentVoid": "Void is the end of this route; there is no next area.",
   "WorldSegmentBeach": "Beach",
   "WorldSegmentTropics": "Tropics",
   "WorldSegmentAlpine": "Alpine",
   "WorldSegmentCaldera": "Caldera",
   "WorldSegmentTheKiln": "The Kiln",
   "WorldSegmentPeak": "Peak",
-  "WorldSegmentVoid": "Void"
+  "WorldSegmentVoid": "Void",
+  "WorldEndpointAdvance": "Warp team to endpoint",
+  "WorldEndpointDestination": "Destination: Void exit portal",
+  "WorldEndpointSubmitted": "Endpoint warp requests sent. Enter the portal yourselves.",
+  "WorldEndpointUnavailable": "Active endpoint portal, safe ground or player warp unavailable. Check the BepInEx log."
 }
-

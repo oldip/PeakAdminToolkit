@@ -92,8 +92,15 @@ internal static class WorldTests
         Check(!advance.CanAdvance() && !advance.Advance() && advance.UnavailableReason() == "WorldNoNextSegment", "Peak to Void blocked");
         int callsAtEnd = WorldDestinationTeleport.Calls;
         FakeMap.CurrentSegmentNumber = FakeSegment.Void;
-        Check(!advance.CanAdvance() && !advance.Advance() && advance.UnavailableReason() == "WorldNoNextSegmentVoid", "Void is terminal");
-        Check(WorldDestinationTeleport.Calls == callsAtEnd, "Void sends no warp");
+        Check(advance.CanAdvance() && advance.TryRead(out current, out next) && next == "Void", "Void endpoint stays in the current area");
+        Check(advance.Advance(), "Void endpoint warp is available");
+        Check(WorldDestinationTeleport.Calls == callsAtEnd + 1, "Void submits one endpoint warp");
+        WorldDestinationTeleport.Result = false;
+        Check(!advance.Advance() && FakeMap.CurrentSegmentNumber == FakeSegment.Void && FakeMap.Calls == nativeCallsBeforePeak, "failed endpoint warp never advances progress");
+        WorldDestinationTeleport.Result = true;
+        FakeNetwork.IsMasterClient = false;
+        Check(!advance.CanAdvance() && !advance.Advance(), "Client cannot move team to endpoint");
+        FakeNetwork.IsMasterClient = true;
         FakeMap.CurrentSegmentNumber = FakeSegment.Beach; FakeNetwork.IsMasterClient = false;
         Check(!advance.CanAdvance() && !advance.Advance() && advance.UnavailableReason() == "WorldHostRequired", "Client cannot advance team");
         FakeNetwork.IsMasterClient = true; FakeGame.IsInGameplayScene = false;

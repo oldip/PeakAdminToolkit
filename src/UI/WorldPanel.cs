@@ -36,15 +36,16 @@ namespace PeakAdminToolkit.UI
             if (advance.TryRead(out current, out next))
             {
                 GUILayout.Label(text.Format("WorldCurrentSegment", text.Text("WorldSegment" + current)), theme.Body);
-                if (next != null) GUILayout.Label(text.Format("WorldNextSegment", text.Text("WorldSegment" + next)), theme.Body);
+                if (current == "Void") GUILayout.Label(text.Text("WorldEndpointDestination"), theme.Body);
+                else if (next != null) GUILayout.Label(text.Format("WorldNextSegment", text.Text("WorldSegment" + next)), theme.Body);
             }
             string advanceReason = advance.UnavailableReason();
             bool previous = GUI.enabled;
             GUI.enabled = previous && advanceReason == null;
-            if (GUILayout.Button(text.Text("WorldAdvance"), theme.Button, GUILayout.Width(340)))
+            if (GUILayout.Button(text.Text(current == "Void" ? "WorldEndpointAdvance" : "WorldAdvance"), theme.Button, GUILayout.Width(340)))
             {
-                toast.Show(text.Text(advance.Advance() ? (next == "Peak" ? "WorldPeakSubmitted" : "WorldAdvanceSubmitted") :
-                    (next == "Peak" ? "WorldPeakLandingUnavailable" : "WorldAdvanceFailed")), Time.unscaledTimeAsDouble, 4.0);
+                toast.Show(text.Text(advance.Advance() ? (current == "Void" ? "WorldEndpointSubmitted" : next == "Peak" ? "WorldPeakSubmitted" : "WorldAdvanceSubmitted") :
+                    (current == "Void" ? "WorldEndpointUnavailable" : next == "Peak" ? "WorldPeakLandingUnavailable" : "WorldAdvanceFailed")), Time.unscaledTimeAsDouble, 4.0);
             }
             GUI.enabled = previous;
             if (advanceReason != null) GUILayout.Label(text.Text(advanceReason), theme.Small);

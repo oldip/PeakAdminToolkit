@@ -1,6 +1,6 @@
 {
   "Heading": "管理工具",
-  "Foundation": "0.8.1 預覽版",
+  "Foundation": "0.8.2 預覽版",
   "RoomRoleLabel": "房間身分：{0}",
   "RoomRoleHost": "房主（Host）",
   "RoomRoleClient": "一般玩家（Client）",
@@ -144,7 +144,7 @@
   "WorldCurrentSegment": "目前區域：{0}",
   "WorldNextSegment": "下一區域：{0}",
   "WorldAdvance": "全隊傳送到下一區目標",
-  "WorldAdvanceHelp": "房主可將全隊送到通往下一區的營火旁；山頂則送到山頂附近。不會自動點燃任何東西。",
+  "WorldAdvanceHelp": "房主可將全隊送到通往下一區的營火旁、山頂或地深冥淵出口傳送門旁。",
   "WorldAdvanceSubmitted": "已送出傳送請求；請確認所有玩家的落點，再自行點燃營火。",
   "WorldAdvanceFailed": "未點燃營火、安全落點或玩家傳送不可用；請查看 BepInEx 日誌。",
   "WorldPeakSubmitted": "已送出山頂傳送請求；請確認每位玩家的落點。",
@@ -154,13 +154,15 @@
   "WorldTimeApiUnavailable": "此 PEAK 版本無法使用時間控制。",
   "WorldMapApiUnavailable": "此 PEAK 版本或場景無法使用地圖控制。",
   "WorldNoNextSegment": "山頂沒有可傳送的下一區域；隱藏關卡請走遊戲內的入口。",
-  "WorldNoNextSegmentVoid": "地深冥淵是本路線的終點，沒有下一個區域。",
   "WorldSegmentBeach": "海灘",
   "WorldSegmentTropics": "熱帶",
   "WorldSegmentAlpine": "雪山",
   "WorldSegmentCaldera": "火山",
   "WorldSegmentTheKiln": "熔爐",
   "WorldSegmentPeak": "山頂",
-  "WorldSegmentVoid": "地深冥淵"
+  "WorldSegmentVoid": "地深冥淵",
+  "WorldEndpointAdvance": "全隊傳送到終點",
+  "WorldEndpointDestination": "目標：地深冥淵出口傳送門",
+  "WorldEndpointSubmitted": "已送出終點傳送請求，請自行進入傳送門。",
+  "WorldEndpointUnavailable": "終點傳送門、安全落點或玩家傳送不可用；請查看 BepInEx 日誌。"
 }
-

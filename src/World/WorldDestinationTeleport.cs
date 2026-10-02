@@ -15,22 +15,27 @@ namespace PeakAdminToolkit.World
             LastFailure = null;
             try
             {
-                PropertyInfo instanceProperty = typeof(MapHandler).GetProperty("Instance", BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-                MapHandler map = instanceProperty == null ? null : instanceProperty.GetValue(null, null) as MapHandler;
-                int index = Array.IndexOf(new[] { "Beach", "Tropics", "Alpine", "Caldera", "TheKiln" }, current);
-                if (map == null || map.segments == null || index < 0 || index >= map.segments.Length)
-                    return Fail("Map segment unavailable");
-                GameObject segment = map.segments[index].segmentParent;
-                if (!segment || !segment.activeInHierarchy) return Fail("Current segment is inactive");
-
-                Transform target = FindUnlitCampfire(map.segments[index].segmentCampfire, next);
+                Transform target;
                 float heightRange = 3.5f;
-                if (!target && current == "TheKiln")
+                if (current == "Void" && next == "Void")
+                    target = WorldVoidEndpoint.Find();
+                else
                 {
-                    target = FindSummitSequence();
-                    heightRange = 20f;
+                    PropertyInfo instanceProperty = typeof(MapHandler).GetProperty("Instance", BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+                    MapHandler map = instanceProperty == null ? null : instanceProperty.GetValue(null, null) as MapHandler;
+                    int index = Array.IndexOf(new[] { "Beach", "Tropics", "Alpine", "Caldera", "TheKiln" }, current);
+                    if (map == null || map.segments == null || index < 0 || index >= map.segments.Length)
+                        return Fail("Map segment unavailable");
+                    GameObject segment = map.segments[index].segmentParent;
+                    if (!segment || !segment.activeInHierarchy) return Fail("Current segment is inactive");
+                    target = FindUnlitCampfire(map.segments[index].segmentCampfire, next);
+                    if (!target && current == "TheKiln")
+                    {
+                        target = FindSummitSequence();
+                        heightRange = 20f;
+                    }
                 }
-                if (!target) return Fail("No unlit next-area campfire or summit sequence landmark");
+                if (!target) return Fail(current == "Void" ? "No unique active Void endpoint portal" : "No unlit next-area campfire or summit sequence landmark");
                 Debug.Log("PEAK Admin Toolkit: destination " + current + " -> " + next + " landmark " + target.name + " at " + target.position);
 
                 var directory = new PlayerDirectory();

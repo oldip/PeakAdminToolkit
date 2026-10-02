@@ -10,3 +10,10 @@ if ($LASTEXITCODE -ne 0) { throw 'World test compilation failed.' }
     Set-Content -LiteralPath ([IO.Path]::ChangeExtension($out, '.runtimeconfig.json')) -Encoding UTF8
 & dotnet $out
 if ($LASTEXITCODE -ne 0) { throw 'World tests failed.' }
+
+$out = Join-Path $PSScriptRoot 'out\WorldEndpointTests.exe'
+& $compiler /nologo /target:exe /warnaserror+ "/out:$out" (Join-Path $root 'src\World\WorldVoidEndpoint.cs') (Join-Path $PSScriptRoot 'WorldEndpointTests.cs')
+if ($LASTEXITCODE -ne 0) { throw 'Endpoint test compilation failed.' }
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'out\WorldTests.runtimeconfig.json') -Destination ([IO.Path]::ChangeExtension($out, '.runtimeconfig.json')) -Force
+& dotnet $out
+if ($LASTEXITCODE -ne 0) { throw 'Endpoint tests failed.' }

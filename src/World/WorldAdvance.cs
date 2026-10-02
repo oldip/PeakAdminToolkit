@@ -27,7 +27,7 @@ namespace PeakAdminToolkit.World
                     return "WorldMapApiUnavailable";
                 string current, next;
                 if (!TryRead(out current, out next)) return "WorldMapApiUnavailable";
-                return next == null ? (current == "Void" ? "WorldNoNextSegmentVoid" : "WorldNoNextSegment") : null;
+                return next == null ? "WorldNoNextSegment" : null;
             }
             catch (Exception) { return "WorldMapApiUnavailable"; }
         }
@@ -44,6 +44,7 @@ namespace PeakAdminToolkit.World
                 if (index < 0 || index >= Segments.Length || value.ToString() != Segments[index]) return false;
                 current = Segments[index];
                 if (index < 5) next = Segments[index + 1];
+                else if (current == "Void") next = current;
                 return true;
             }
             catch (Exception) { return false; }

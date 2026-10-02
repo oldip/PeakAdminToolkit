@@ -15,7 +15,7 @@ namespace PeakAdminToolkit
     {
         public const string Guid = "com.oldip.peakadmintoolkit";
         public const string Name = "PEAK Admin Toolkit";
-        public const string Version = "0.8.1";
+        public const string Version = "0.8.2";
 
         private ToolkitConfig config;
         private Compatibility compatibility;

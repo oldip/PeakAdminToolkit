@@ -38,14 +38,14 @@ $sources += @('src\Players\PlayerDirectory.cs','src\Players\PlayerLanding.cs','s
 $sources += 'src\Core\RoomRoleReader.cs'
 $sources += @('src\Players\PlayerNoPenaltyRevive.cs','src\Room\RoomHostTransfer.cs')
 $sources += 'src\Players\PlayerCleanse.cs'
-$sources += @('src\World\WorldTime.cs','src\World\WorldAdvance.cs','src\World\WorldWarpBatch.cs','src\World\WorldDestinationTeleport.cs','src\UI\WorldPanel.cs')
+$sources += @('src\World\WorldTime.cs','src\World\WorldAdvance.cs','src\World\WorldVoidEndpoint.cs','src\World\WorldWarpBatch.cs','src\World\WorldDestinationTeleport.cs','src\UI\WorldPanel.cs')
 $sources += @('src\Players\DroppedItemHistory.cs','src\Players\DroppedItemRecovery.cs','src\Core\DroppedItemCapture.cs')
 foreach ($source in $sources) {
     $path = Join-Path $PSScriptRoot $source
     if (-not (Test-Path -LiteralPath $path)) { throw "Missing source file: $source" }
     $arguments += $path
 }
-Write-Host '[INFO] Building PEAK Admin Toolkit 0.8.1 (embedded descriptions and interface translations; no character dictionaries or images)'
+Write-Host '[INFO] Building PEAK Admin Toolkit 0.8.2 (embedded descriptions and interface translations; no character dictionaries or images)'
 & $compiler @arguments
 if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $output)) { throw "Build failed (exit $LASTEXITCODE)." }
 Write-Host "[OK] Built $output" -ForegroundColor Green

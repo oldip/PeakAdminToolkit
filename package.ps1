@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Stop'
 $stage = Join-Path ([IO.Path]::GetTempPath()) ('PeakAdminToolkit-package-' + [Guid]::NewGuid().ToString('N'))
-$packageRoot = Join-Path $stage 'PeakAdminToolkit-0.8.1-source'
-$archive = Join-Path $PSScriptRoot 'PeakAdminToolkit-0.8.1-source.zip'
+$packageRoot = Join-Path $stage 'PeakAdminToolkit-0.8.2-source'
+$archive = Join-Path $PSScriptRoot 'PeakAdminToolkit-0.8.2-source.zip'
 $files = @('README.md','CHANGELOG.md','THIRD_PARTY_NOTICES.md','CONTRIBUTING.md','LICENSE','README.zh-TW.md','build.cmd','build.ps1','package.ps1','.gitignore','.gitattributes')
 try {
     New-Item -ItemType Directory -Force -Path $packageRoot | Out-Null
