@@ -1,0 +1,9 @@
+/refs/
+/Managed/
+/old/
+/out/
+/tests/out/
+*.dll
+*.exe
+*.pdb
+*.zip

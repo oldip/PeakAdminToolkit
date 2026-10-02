@@ -1,0 +1,266 @@
+[
+  {
+    "prefab": "RescueHook_Infinite",
+    "itemId": 167,
+    "uiName": "Rescue Claw",
+    "kind": "SpecialVariants"
+  },
+  {
+    "prefab": "ScoutCookies_Vanilla",
+    "itemId": 157,
+    "uiName": "Scout Cookies",
+    "kind": "SpecialVariants"
+  },
+  {
+    "prefab": "Parachute",
+    "itemId": 176,
+    "uiName": "AUTOPARACHUTE",
+    "kind": "UnusedItems"
+  },
+  {
+    "prefab": "Basketball",
+    "itemId": 31,
+    "uiName": "Basketball",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "Warpsketball",
+    "itemId": 175,
+    "uiName": "Warpsketball",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "C_Bishop B",
+    "itemId": 127,
+    "uiName": "Bishop",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "C_Bishop W",
+    "itemId": 128,
+    "uiName": "Bishop",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "C_King B",
+    "itemId": 129,
+    "uiName": "King",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "C_King W",
+    "itemId": 130,
+    "uiName": "King",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "C_Knight B",
+    "itemId": 131,
+    "uiName": "Knight",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "C_Knight W",
+    "itemId": 132,
+    "uiName": "Knight",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "C_Pawn B",
+    "itemId": 133,
+    "uiName": "Pawn",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "C_Pawn W",
+    "itemId": 134,
+    "uiName": "Pawn",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "C_Queen B",
+    "itemId": 135,
+    "uiName": "Queen",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "C_Queen W",
+    "itemId": 136,
+    "uiName": "Queen",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "C_Rook B",
+    "itemId": 137,
+    "uiName": "Rook",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "C_Rook W",
+    "itemId": 138,
+    "uiName": "Rook",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "GuidebookPageScroll Variant",
+    "itemId": 49,
+    "uiName": "Scroll",
+    "kind": "MiscellaneousItems"
+  },
+  {
+    "prefab": "Binoculars_Prop",
+    "itemId": 125,
+    "uiName": "Binoculars",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "Lollipop_Prop",
+    "itemId": 139,
+    "uiName": "Big Lollipop",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "Bugle_Prop Variant",
+    "itemId": 126,
+    "uiName": "Bugle",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "BingBong_Prop Variant",
+    "itemId": 124,
+    "uiName": "Bing Bong",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "Passport",
+    "itemId": 59,
+    "uiName": "Passport",
+    "kind": "LobbyToys"
+  },
+  {
+    "prefab": "Cursed Skull",
+    "itemId": 25,
+    "uiName": "Cursed Skull",
+    "kind": "MultiplayerItems"
+  },
+  {
+    "prefab": "Bugle_Magic",
+    "itemId": 16,
+    "uiName": "Bugle of Friendship",
+    "kind": "MultiplayerItems"
+  },
+  {
+    "prefab": "ScoutEffigy",
+    "itemId": 67,
+    "uiName": "Scout Effigy",
+    "kind": "MultiplayerItems"
+  },
+  {
+    "prefab": "HealingDart Variant",
+    "itemId": 70,
+    "uiName": "Blowgun",
+    "kind": "MultiplayerItems"
+  },
+  {
+    "prefab": "RitualDagger",
+    "itemId": 173,
+    "uiName": "RitualDagger",
+    "kind": "MultiplayerItems"
+  },
+  {
+    "prefab": "GuidebookPage_10_Sleepy",
+    "itemId": 86,
+    "uiName": "Torn Page",
+    "kind": "MiscellaneousItems"
+  },
+  {
+    "prefab": "GuidebookPage_0_Intro",
+    "itemId": 50,
+    "uiName": "Torn Page",
+    "kind": "MiscellaneousItems"
+  },
+  {
+    "prefab": "GuidebookPage_11_Awake",
+    "itemId": 87,
+    "uiName": "Torn Page",
+    "kind": "MiscellaneousItems"
+  },
+  {
+    "prefab": "GuidebookPage",
+    "itemId": 80,
+    "uiName": "Torn Page",
+    "kind": "MiscellaneousItems"
+  },
+  {
+    "prefab": "Fannypack",
+    "itemId": 166,
+    "uiName": "Fannypack",
+    "kind": "MultiplayerItems"
+  },
+  {
+    "prefab": "GuidebookPage_2_Campfire",
+    "itemId": 52,
+    "uiName": "Torn Page",
+    "kind": "MiscellaneousItems"
+  },
+  {
+    "prefab": "GuidebookPage_6_BodyHeat",
+    "itemId": 85,
+    "uiName": "Torn Page",
+    "kind": "MiscellaneousItems"
+  },
+  {
+    "prefab": "GuidebookPage_7_BurningSun",
+    "itemId": 188,
+    "uiName": "Torn Page",
+    "kind": "MiscellaneousItems"
+  },
+  {
+    "prefab": "GuidebookPage_9_Gloom",
+    "itemId": 190,
+    "uiName": "Torn Page",
+    "kind": "MiscellaneousItems"
+  },
+  {
+    "prefab": "GuidebookPage_8_Magma",
+    "itemId": 189,
+    "uiName": "Torn Page",
+    "kind": "MiscellaneousItems"
+  },
+  {
+    "prefab": "GuidebookPage_1_Mushrooms",
+    "itemId": 82,
+    "uiName": "Torn Page",
+    "kind": "MiscellaneousItems"
+  },
+  {
+    "prefab": "GuidebookPage_5_Zombies",
+    "itemId": 187,
+    "uiName": "Torn Page",
+    "kind": "MiscellaneousItems"
+  },
+  {
+    "prefab": "GuidebookPage_3_Revival",
+    "itemId": 53,
+    "uiName": "Torn Page",
+    "kind": "MiscellaneousItems"
+  },
+  {
+    "prefab": "GuidebookPage_4_Poison",
+    "itemId": 186,
+    "uiName": "Torn Page",
+    "kind": "MiscellaneousItems"
+  },
+  {
+    "prefab": "GuidebookPage_12_Crashout",
+    "itemId": 54,
+    "uiName": "Torn Page",
+    "kind": "MiscellaneousItems"
+  },
+  {
+    "prefab": "GuidebookPage_13_FirstTeams",
+    "itemId": 96,
+    "uiName": "Torn Page",
+    "kind": "MiscellaneousItems"
+  }
+]
