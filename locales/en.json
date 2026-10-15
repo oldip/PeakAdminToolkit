@@ -1,6 +1,6 @@
 {
   "Heading": "Admin Toolkit",
-  "Foundation": "0.8.3 preview",
+  "Foundation": "0.8.4 preview",
   "RoomRoleLabel": "Room role: {0}",
   "RoomRoleHost": "Host",
   "RoomRoleClient": "Client",
@@ -161,8 +161,8 @@
   "WorldEndpointDestination": "Destination: Void exit portal",
   "WorldEndpointSubmitted": "Endpoint warp requests sent. Enter the portal yourselves.",
   "WorldEndpointUnavailable": "Active endpoint portal, safe ground or player warp unavailable. Check the BepInEx log.",
-  "PlayerFullRevive": "Complete revival",
-  "PlayerFullReviveScope": "Own complete revival clears curse/statuses and refills base stamina. Remote revival is experimental: native status cleanup accepts Host requests only; stamina refill is unconfirmed.",
-  "PlayerFullReviveExperimental": "Complete revival (test)",
-  "PlayerFullReviveRemoteSubmitted": "Native revival/status requests sent. Full recovery is unconfirmed; check curse, negative effects and stamina."
+  "PlayerFullRevive": "Full recovery",
+  "PlayerFullReviveScope": "Available at any time: recover while alive, wake if unconscious, revive only if dead. Own recovery clears curse/statuses and refills usable stamina. Remote cleanup is experimental, accepts Host requests only, and does not confirm stamina refill.",
+  "PlayerFullReviveExperimental": "Full recovery (test)",
+  "PlayerFullReviveRemoteSubmitted": "Native recovery requests sent. Full recovery is unconfirmed; check curse, negative effects and stamina."
 }

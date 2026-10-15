@@ -1,6 +1,6 @@
 {
   "Heading": "管理工具",
-  "Foundation": "0.8.3 預覽版",
+  "Foundation": "0.8.4 預覽版",
   "RoomRoleLabel": "房間身分：{0}",
   "RoomRoleHost": "房主（Host）",
   "RoomRoleClient": "一般玩家（Client）",
@@ -162,7 +162,7 @@
   "WorldEndpointSubmitted": "已送出終點傳送請求，請自行進入傳送門。",
   "WorldEndpointUnavailable": "終點傳送門、安全落點或玩家傳送不可用；請查看 BepInEx 日誌。",
   "PlayerFullRevive": "完全重生",
-  "PlayerFullReviveScope": "自己可清除詛咒與狀態並補滿基本體力。遠端為實驗：原生清狀態只接受房主，體力恢復待實測。",
+  "PlayerFullReviveScope": "隨時可用：存活只恢復、昏迷先喚醒、死亡才復活。自己清除詛咒並補滿可用體力；遠端為實驗，清狀態需房主，體力待確認。",
   "PlayerFullReviveExperimental": "完全重生（實驗）",
-  "PlayerFullReviveRemoteSubmitted": "已送出原生復活與狀態請求；完整恢復未確認，請檢查詛咒、負面狀態及體力。"
+  "PlayerFullReviveRemoteSubmitted": "已送出原生恢復請求；完整恢復未確認，請檢查詛咒、負面狀態及體力。"
 }

@@ -67,7 +67,7 @@ internal sealed class FakeAfflictions
     public void RemoveAllThorns() { ThornCalls++; }
     public void ClearAllAfflictions() { AfflictionCalls++; }
 }
-internal sealed class FakePlayerItems { public readonly List<FakePlayerView> droppedItems = new List<FakePlayerView>(); }
+internal sealed class FakePlayerItems { public readonly List<FakePlayerView> droppedItems = new List<FakePlayerView>(); public object HeldItem = new object(); public object Backpack = new object(); }
 internal sealed class FakePlayerRefs { public FakeAfflictions afflictions = new FakeAfflictions(); public FakePlayerItems items = new FakePlayerItems(); }
 internal class FakePlayerCharacter
 {

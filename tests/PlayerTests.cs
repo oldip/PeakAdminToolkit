@@ -130,7 +130,21 @@ internal static class PlayerTests
         Check((bool)fullType.GetMethod("Request", flags).Invoke(full, new object[] { players[0] }), "complete revival request succeeds after native local revival");
         Check(!self.data.dead && !self.HasCurse && !self.HasDebuff && self.stamina == 1f, "complete revival removes curse and refills capped stamina");
         Check(!(bool)self.photonView.LastArguments[1], "complete revival skips new native penalties");
-        Check(!(bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[0] }), "complete revival only revives dead characters");
+        Check((bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[0] }), "complete recovery is available while alive");
+        object held = self.refs.items.HeldItem, backpack = self.refs.items.Backpack;
+        for (int state = 0; state < 4; state++)
+        {
+            self.HasDebuff = state == 1 || state == 3; self.HasCurse = state == 2 || state == 3;
+            self.data.fullyPassedOut = state == 3; self.stamina = state == 0 ? 1f : 0.1f;
+            int recoveryBefore = self.photonView.Calls.Count;
+            Check((bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[0] }), "alive state can recover " + state);
+            Check((bool)fullType.GetMethod("Request", flags).Invoke(full, new object[] { players[0] }), "alive state recovery request " + state);
+            Check(!self.HasDebuff && !self.HasCurse && self.stamina == 1f, "alive recovery clears curse and restores capped stamina " + state);
+            Check(self.photonView.Calls.Count == recoveryBefore + (state == 3 ? 1 : 0), "only unconscious state needs wake RPC " + state);
+            if (state == 3) Check(self.photonView.Calls[recoveryBefore] == "RPCA_UnPassOut", "unconscious character receives wake instead of revival");
+            Check(ReferenceEquals(held, self.refs.items.HeldItem) && ReferenceEquals(backpack, self.refs.items.Backpack), "alive inventory is preserved " + state);
+        }
+        self.data.fullyPassedOut = false;
         friend.data.dead = true;
         friend.photonView.IsMine = false;
         Check((bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[1] }), "Client can attempt remote complete revival through native requests");
@@ -151,6 +165,20 @@ internal static class PlayerTests
         friend.refs.afflictions.ThrowOnRead = true;
         Check(!(bool)fullType.GetMethod("Request", flags).Invoke(full, new object[] { players[1] }) && friend.photonView.Calls.Count == calls, "status preparation failure sends no partial revive request");
         friend.refs.afflictions.ThrowOnRead = false;
+        friend.data.dead = false; friend.data.fullyPassedOut = false;
+        held = friend.refs.items.HeldItem; backpack = friend.refs.items.Backpack;
+        calls = friend.photonView.Calls.Count;
+        FakeNetwork.IsMasterClient = false;
+        Check((bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[1] }), "Client can attempt recovery for living friend");
+        Check((bool)fullType.GetMethod("Request", flags).Invoke(full, new object[] { players[1] }), "living friend receives status request");
+        Check(friend.photonView.Calls.Count == calls + 1 && friend.photonView.Calls[calls] == "RPC_ApplyStatusesFromFloatArray", "living friend does not receive revival or wake");
+        friend.data.fullyPassedOut = true; calls = friend.photonView.Calls.Count;
+        Check((bool)fullType.GetMethod("Request", flags).Invoke(full, new object[] { players[1] }), "unconscious friend can receive native recovery requests");
+        Check(friend.photonView.Calls.Count == calls + 2 && friend.photonView.Calls[calls] == "RPCA_UnPassOut" && friend.photonView.Calls[calls + 1] == "RPC_ApplyStatusesFromFloatArray", "remote wake precedes status cleanup without revival");
+        Check(ReferenceEquals(held, friend.refs.items.HeldItem) && ReferenceEquals(backpack, friend.refs.items.Backpack), "friend inventory is preserved");
+        FakeNetwork.InRoom = false;
+        Check(!(bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[0] }) && !(bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[1] }), "recovery remains unavailable outside room");
+        FakeNetwork.InRoom = true;
         self.data.dead = true; self.photonView.ApplyRevival = false;
         Check(!(bool)fullType.GetMethod("Request", flags).Invoke(full, new object[] { players[0] }), "no false completion when native revival has not executed");
         self.data.dead = false;

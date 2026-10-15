@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.8.4
+
+- Full recovery is available while alive, injured, cursed, unconscious or dead.
+- Living recovery avoids revival; unconscious recovery wakes first. Held items and backpacks remain untouched in these paths.
+- Remote recovery remains an experimental native request.
+
+
 ## 0.8.3
 
 - Remove the Host-transfer attempt from Overview.
