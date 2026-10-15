@@ -11,3 +11,5 @@ if ($panel -match 'wake\.|cleanse\.|PlayerWake|PlayerCleanse') { throw 'Wake and
 if ($panel -notmatch 'if \(!self\)') { throw 'Own player card must hide teleport buttons.' }
 if ($selfPanel -notmatch 'cleanse\.Request' -or $selfPanel -notmatch 'PlayerCleanse') { throw 'Own cleanse must appear under Self tools.' }
 Write-Host 'PASS: player cards and Self tools expose only relevant actions.'
+
+if ($panel -notmatch 'PlayerFullReviveExperimental' -or $panel -notmatch 'PlayerFullReviveRemoteSubmitted') { throw 'Remote experimental complete-revival control or request feedback missing.' }

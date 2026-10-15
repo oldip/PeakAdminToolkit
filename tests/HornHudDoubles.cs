@@ -32,7 +32,8 @@ public sealed class OptionalSlot { public bool IsSome; public byte Value; }
 public sealed class Item
 {
     public MagicBugle bugle;
-    public object GetComponent(Type type) { return type == typeof(MagicBugle) ? bugle : null; }
+    public bool ThrowOnRead;
+    public object GetComponent(Type type) { if (ThrowOnRead) throw new InvalidOperationException("transient held-item error"); return type == typeof(MagicBugle) ? bugle : null; }
 }
 public sealed class MagicBugle { public float currentFuel { get; set; } public float totalTootTime; }
 public sealed class GUIManager { public InventoryItemUI[] items; [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)] public void UpdateItems() { } }

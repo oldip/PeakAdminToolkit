@@ -11,6 +11,7 @@ namespace PeakAdminToolkit.UI
         private readonly PlayerDirectory directory = new PlayerDirectory();
         private readonly PlayerRevive revive;
         private readonly PlayerNoPenaltyRevive cleanRevive;
+        private readonly PlayerFullRevive fullRevive;
         private readonly PlayerTeleport teleport;
         private readonly DroppedItemRecovery recovery;
         private object recoveryOwner;
@@ -22,6 +23,7 @@ namespace PeakAdminToolkit.UI
             var landing = new UnityPlayerLanding(log);
             revive = new PlayerRevive(directory, landing);
             cleanRevive = new PlayerNoPenaltyRevive(directory, landing);
+            fullRevive = new PlayerFullRevive(directory, landing);
             teleport = new PlayerTeleport(directory, landing);
             recovery = new DroppedItemRecovery(directory, null, history);
         }
@@ -31,10 +33,13 @@ namespace PeakAdminToolkit.UI
             GUILayout.Label(text.Text("PlayerScope"), theme.Body);
             if (!revive.Available) GUILayout.Label(text.Text("PlayerRevive") + " / " + text.Text("PlayerNoPenaltyRevive") + " · " +
                 text.Format("SelfUnavailableReason", revive.FailureReason), theme.Small);
+            if (!fullRevive.Available) GUILayout.Label(text.Text("PlayerFullRevive") + " · " +
+                text.Format("SelfUnavailableReason", fullRevive.FailureReason), theme.Small);
             if (!teleport.Available) GUILayout.Label(text.Text("PlayerTeleportTo") + " / " + text.Text("PlayerBringHere") + " · " +
                 text.Format("SelfUnavailableReason", teleport.FailureReason), theme.Small);
             if (!directory.CanRequestPlayerRpc) GUILayout.Label(text.Text("PlayerRoomOnly"), theme.Small);
             GUILayout.Label(text.Text("PlayerNoPenaltyScope"), theme.Small);
+            GUILayout.Label(text.Text("PlayerFullReviveScope"), theme.Small);
             GUILayout.Label(text.Text("RecoveryScope"), theme.Small);
             List<PlayerEntry> players = directory.Read();
             scroll = GUILayout.BeginScrollView(scroll, GUILayout.ExpandHeight(true));
@@ -51,6 +56,8 @@ namespace PeakAdminToolkit.UI
                 GUILayout.BeginHorizontal();
                 ActionButton(revive.CanRequest(entry), "PlayerRevive", () => revive.Request(entry), entry.Name, theme, text, toast);
                 ActionButton(cleanRevive.CanRequest(entry), "PlayerNoPenaltyRevive", () => cleanRevive.Request(entry), entry.Name, theme, text, toast);
+                ActionButton(fullRevive.CanRequest(entry), self ? "PlayerFullRevive" : "PlayerFullReviveExperimental", () => fullRevive.Request(entry), entry.Name, theme, text, toast,
+                    self ? null : "PlayerFullReviveRemoteSubmitted");
                 GUILayout.EndHorizontal();
                 if (!self)
                 {

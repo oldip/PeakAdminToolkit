@@ -18,8 +18,8 @@ namespace PeakAdminToolkit.World
             {
                 Type network = resolve("Photon.Pun.PhotonNetwork");
                 if (network == null) return "WorldMapApiUnavailable";
-                if (!ReadBool(network, "InRoom") || !ReadBool(network, "IsMasterClient"))
-                    return "WorldHostRequired";
+                if (!ReadBool(network, "InRoom"))
+                    return "WorldRoomRequired";
                 Type game = resolve("GameHandler");
                 if (game == null || !ReadBool(game, "IsInGameplayScene")) return "WorldGameplayRequired";
                 Type map = resolve("MapHandler");

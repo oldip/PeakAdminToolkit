@@ -1,12 +1,26 @@
 using System;
 using PeakAdminToolkit.World;
 
+internal enum FakeTimeTarget { All }
+internal sealed class FakeTimeView
+{
+    public int ViewID = 9;
+    public int Calls;
+    public object[] LastArguments;
+    public void RPC(string method, FakeTimeTarget target, object[] arguments)
+    {
+        if (method != "RPCA_SyncTime" || target != FakeTimeTarget.All) throw new Exception("wrong time RPC");
+        Calls++; LastArguments = arguments;
+        FakeDay.instance.dayCount = (int)arguments[0]; FakeDay.instance.timeOfDay = (float)arguments[1];
+    }
+}
 internal enum FakeSegment { Beach, Tropics, Alpine, Caldera, TheKiln, Peak, Void }
 internal static class FakeNetwork { private static bool inRoom = true, master = true; public static bool InRoom { get { return inRoom; } set { inRoom = value; } } public static bool IsMasterClient { get { return master; } set { master = value; } } }
 internal static class FakeGame { private static bool gameplay = true; public static bool IsInGameplayScene { get { return gameplay; } set { gameplay = value; } } }
 internal sealed class FakeDay
 {
     public static FakeDay instance = new FakeDay();
+    public FakeTimeView photonView = new FakeTimeView();
     public float timeOfDay = 9;
     public int dayCount = 1;
     private bool passedMidnight;
@@ -36,6 +50,7 @@ internal static class WorldTests
     {
         if (name == "Photon.Pun.PhotonNetwork") return typeof(FakeNetwork);
         if (name == "GameHandler") return typeof(FakeGame);
+        if (name == "Photon.Pun.RpcTarget") return typeof(FakeTimeTarget);
         if (name == "DayNightManager") return typeof(FakeDay);
         if (name == "MapHandler") return typeof(FakeMap);
         return null;
@@ -50,20 +65,25 @@ internal static class WorldTests
     {
         var time = new WorldTime(Resolve);
         Check(time.CanSet(), "Host in gameplay can set time");
-        Check(time.Set(TimePreset.Morning) && FakeDay.instance.timeOfDay == 7, "morning is 07:00");
-        Check(time.Set(TimePreset.Noon) && FakeDay.instance.timeOfDay == 12, "noon is 12:00");
-        Check(time.Set(TimePreset.Evening) && FakeDay.instance.timeOfDay == 18, "evening is 18:00");
-        Check(time.Set(TimePreset.Midnight) && FakeDay.instance.timeOfDay == 0, "midnight is 00:00");
+        Check(time.Set(TimePreset.Morning) && FakeDay.instance.timeOfDay == 5, "morning is 05:00");
+        Check(time.Set(TimePreset.Noon) && FakeDay.instance.timeOfDay == 13, "day midpoint is 13:00");
+        Check(time.Set(TimePreset.Evening) && FakeDay.instance.timeOfDay == 21, "evening is 21:00");
+        Check(time.Set(TimePreset.Midnight) && FakeDay.instance.timeOfDay == 1, "night midpoint is 01:00");
         Check(FakeDay.instance.dayCount == 1 && FakeRun.TimeSinceRunStarted == 5400, "presets preserve day and run duration");
         int day; float hour;
-        Check(time.TryRead(out day, out hour) && day == 1 && hour == 0, "current day and hour are read");
+        Check(time.TryRead(out day, out hour) && day == 1 && hour == 1, "current day and hour are read");
         FakeDay.instance.MarkPendingMidnight();
         Check(time.Set(TimePreset.Morning), "morning request accepted during pending native day change");
+        FakeDay.instance.timeOfDay = 6;
         FakeDay.instance.ApplyDayUpdate();
         Check(FakeDay.instance.dayCount == 1, "morning preset must not trigger pending native day increment");
         FakeNetwork.IsMasterClient = false;
-        Check(!time.CanSet() && !time.Set(TimePreset.Noon), "Client cannot change time");
-        Check(time.UnavailableReason() == "WorldHostRequired", "Client sees Host requirement");
+        Check(time.CanSet() && time.Set(TimePreset.Noon), "Client can request synchronized time");
+        Check(time.UnavailableReason() == null, "Client is not artificially blocked");
+        Check(FakeDay.instance.photonView.Calls >= 6 && (int)FakeDay.instance.photonView.LastArguments[0] == 1, "Client sends native time sync with unchanged day");
+        FakeDay.instance.photonView.ViewID = 0;
+        Check(!time.CanSet(), "unregistered time view blocked");
+        FakeDay.instance.photonView.ViewID = 9;
         FakeNetwork.IsMasterClient = true; FakeGame.IsInGameplayScene = false;
         Check(!time.CanSet() && time.UnavailableReason() == "WorldGameplayRequired", "time unavailable outside gameplay");
         FakeGame.IsInGameplayScene = true; FakeDay.instance = null;
@@ -99,10 +119,10 @@ internal static class WorldTests
         Check(!advance.Advance() && FakeMap.CurrentSegmentNumber == FakeSegment.Void && FakeMap.Calls == nativeCallsBeforePeak, "failed endpoint warp never advances progress");
         WorldDestinationTeleport.Result = true;
         FakeNetwork.IsMasterClient = false;
-        Check(!advance.CanAdvance() && !advance.Advance(), "Client cannot move team to endpoint");
+        Check(advance.CanAdvance() && advance.Advance(), "Client can request team endpoint warp");
         FakeNetwork.IsMasterClient = true;
         FakeMap.CurrentSegmentNumber = FakeSegment.Beach; FakeNetwork.IsMasterClient = false;
-        Check(!advance.CanAdvance() && !advance.Advance() && advance.UnavailableReason() == "WorldHostRequired", "Client cannot advance team");
+        Check(advance.CanAdvance() && advance.Advance(), "Client can request team warp");
         FakeNetwork.IsMasterClient = true; FakeGame.IsInGameplayScene = false;
         Check(!advance.CanAdvance(), "jump unavailable outside gameplay");
         FakeGame.IsInGameplayScene = true; FakeMap.ExistsAndInitialized = false;

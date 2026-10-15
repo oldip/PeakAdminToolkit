@@ -20,7 +20,6 @@ namespace PeakAdminToolkit.UI
         private readonly WorldPanel worldPanel = new WorldPanel();
         private readonly PlayerPanel playerPanel;
         private readonly RoomRoleReader roomRole = new RoomRoleReader();
-        private readonly RoomHostTransfer hostTransfer = new RoomHostTransfer();
         private readonly Localization localization = new Localization();
         private readonly CursorLease cursor = new CursorLease();
         private readonly Theme theme = new Theme();
@@ -170,16 +169,6 @@ namespace PeakAdminToolkit.UI
             string roleKey = role == RoomRole.Host ? "RoomRoleHost" : role == RoomRole.Client ? "RoomRoleClient" :
                 role == RoomRole.OutsideRoom ? "RoomRoleOutside" : "RoomRoleUnavailable";
             GUILayout.Label(localization.Format("RoomRoleLabel", localization.Text(roleKey)), theme.Body);
-            bool previous = GUI.enabled;
-            try
-            {
-                GUI.enabled = previous && hostTransfer.CanRequest();
-                if (GUILayout.Button(localization.Text("RoomTransferAttempt"), theme.Button, GUILayout.Width(320)))
-                    toast.Show(localization.Text(hostTransfer.Request() ? "RoomTransferSubmitted" : "RoomTransferFailed"),
-                        Time.unscaledTimeAsDouble, 4.0);
-            }
-            finally { GUI.enabled = previous; }
-            GUILayout.Label(localization.Text("RoomTransferHelp"), theme.Small);
             GUILayout.Space(16);
             GUILayout.Label(localization.Text("Language"), theme.Body);
             GUIContent[] choices = {

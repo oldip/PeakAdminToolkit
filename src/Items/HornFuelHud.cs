@@ -15,6 +15,7 @@ namespace PeakAdminToolkit.Items
         private readonly Action<string> log;
         private readonly Func<bool> enabled;
         private bool disposed;
+        private string frameFailure;
         internal bool Available { get; private set; }
 
         internal HornFuelHud(Func<string, Type> resolve, Action<string> log, Func<bool> enabled)
@@ -41,8 +42,14 @@ namespace PeakAdminToolkit.Items
         {
             HornFuelHud self = current;
             if (self == null || !self.Available || (self.enabled != null && !self.enabled())) return;
-            try { Apply(__instance, self.resolve); }
-            catch (Exception ex) { self.Fail(ex); }
+            try { Apply(__instance, self.resolve); self.frameFailure = null; }
+            catch (Exception ex)
+            {
+                while (ex is TargetInvocationException && ex.InnerException != null) ex = ex.InnerException;
+                string reason = ex.GetType().Name + ": " + ex.Message;
+                if (self.frameFailure != reason && self.log != null) self.log("Horn HUD frame skipped: " + reason);
+                self.frameFailure = reason;
+            }
         }
 
         internal static void Apply(object gui, Func<string, Type> resolve)
@@ -105,6 +112,7 @@ namespace PeakAdminToolkit.Items
 
         private void Fail(Exception ex)
         {
+            while (ex is TargetInvocationException && ex.InnerException != null) ex = ex.InnerException;
             Available = false;
             if (ReferenceEquals(current, this)) current = null;
             try { harmony.UnpatchSelf(); } catch { }

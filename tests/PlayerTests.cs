@@ -117,6 +117,44 @@ internal static class PlayerTests
         reason = FailureReason(new PlayerCleanse(directory, name => null));
         Check(reason != null && reason.Contains("CharacterAfflictions"), "cleanse incompatibility identifies its missing type");
         Check(FailureReason(revive) == null && FailureReason(teleport) == null && FailureReason(cleanse) == null, "available player modules have no failure reason");
+        Type fullType = System.Reflection.Assembly.GetExecutingAssembly().GetType("PeakAdminToolkit.Players.PlayerFullRevive");
+        Check(fullType != null, "independent complete revival exists");
+        var constructor = fullType.GetConstructor(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic, null,
+            new[] { typeof(PlayerDirectory), typeof(IPlayerLanding), typeof(Func<string, Type>) }, null);
+        object full = constructor.Invoke(new object[] { directory, landing, new Func<string, Type>(Resolve) });
+        var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic;
+        self.data.dead = true; self.HasCurse = true; self.HasDebuff = true; self.stamina = 0.1f;
+        FakeNetwork.IsMasterClient = false;
+        self.photonView.ApplyRevival = true;
+        Check((bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[0] }), "Client can completely revive own character");
+        Check((bool)fullType.GetMethod("Request", flags).Invoke(full, new object[] { players[0] }), "complete revival request succeeds after native local revival");
+        Check(!self.data.dead && !self.HasCurse && !self.HasDebuff && self.stamina == 1f, "complete revival removes curse and refills capped stamina");
+        Check(!(bool)self.photonView.LastArguments[1], "complete revival skips new native penalties");
+        Check(!(bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[0] }), "complete revival only revives dead characters");
+        friend.data.dead = true;
+        friend.photonView.IsMine = false;
+        Check((bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[1] }), "Client can attempt remote complete revival through native requests");
+        int selfClears = FakePlayerCharacter.ClearAllCalls;
+        self.HasDebuff = true; self.HasCurse = true; self.stamina = 0.3f;
+        Check((bool)fullType.GetMethod("Request", flags).Invoke(full, new object[] { players[1] }), "remote revival and status requests are submitted");
+        int last = friend.photonView.Calls.Count - 1;
+        Check(friend.photonView.Calls[last - 1] == "RPCA_ReviveAtPosition" && friend.photonView.Calls[last] == "RPC_ApplyStatusesFromFloatArray", "remote native revival precedes native status request");
+        Check(friend.photonView.LastArguments.Length == 1 && friend.photonView.LastArguments[0] is float[], "status RPC receives one float array argument");
+        var deltas = (float[])friend.photonView.LastArguments[0];
+        Check(deltas[(int)FakeStatus.Curse] <= -1 && deltas[(int)FakeStatus.Petrify] <= -1, "remote request includes curse and petrify");
+        Check(deltas[(int)FakeStatus.Cold] == -2.5f && deltas[(int)FakeStatus.Shield] == 0 && deltas[(int)FakeStatus.Crab] == 0, "native curability rules and actual status magnitude are retained");
+        Check(Array.TrueForAll(deltas, value => value <= 0), "cleanup request never adds a status");
+        Check(FakePlayerCharacter.ClearAllCalls == selfClears && self.HasDebuff && self.HasCurse && self.stamina == 0.3f, "remote request never clears operator or writes replica stamina");
+        FakeNetwork.IsMasterClient = true;
+        Check((bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[1] }), "Host can also attempt remote complete revival");
+        int calls = friend.photonView.Calls.Count;
+        friend.refs.afflictions.ThrowOnRead = true;
+        Check(!(bool)fullType.GetMethod("Request", flags).Invoke(full, new object[] { players[1] }) && friend.photonView.Calls.Count == calls, "status preparation failure sends no partial revive request");
+        friend.refs.afflictions.ThrowOnRead = false;
+        self.data.dead = true; self.photonView.ApplyRevival = false;
+        Check(!(bool)fullType.GetMethod("Request", flags).Invoke(full, new object[] { players[0] }), "no false completion when native revival has not executed");
+        self.data.dead = false;
+
     }
     private static string FailureReason(object feature)
     {

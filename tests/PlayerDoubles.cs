@@ -40,10 +40,12 @@ internal sealed class FakePlayerView
     public readonly List<string> Calls = new List<string>();
     public object[] LastArguments;
     public object Component;
+    public bool ApplyRevival = false;
     public object GetComponent(Type type) { return Component != null && type.IsInstanceOfType(Component) ? Component : null; }
     public void RPC(string method, FakeRpcTarget target, params object[] arguments)
     {
         Calls.Add(method); LastArguments = arguments;
+        if (ApplyRevival && method == "RPCA_ReviveAtPosition") FakePlayerCharacter.localCharacter.data.dead = false;
     }
 }
 internal sealed class FakePlayerData
@@ -51,11 +53,17 @@ internal sealed class FakePlayerData
     public bool dead { get; set; }
     public bool fullyPassedOut;
 }
+internal enum FakeStatus { Injury, Hunger, Cold, Poison, Shield, Curse, Drowsy, Crab, Weight = 9, Arrow = 12, Petrify = 13 }
+internal struct FakeMessageInfo { }
 internal sealed class FakeAfflictions
 {
+    public bool ThrowOnRead = false;
+    public float GetCurrentStatus(FakeStatus status) { if (ThrowOnRead) throw new InvalidOperationException("status unavailable"); return status == FakeStatus.Cold ? 2.5f : 0.4f; }
+    private bool StatusIsCurable(FakeStatus status, bool curse, bool petrify) { return status != FakeStatus.Shield && status != FakeStatus.Crab && status != FakeStatus.Weight && status != FakeStatus.Arrow && (status != FakeStatus.Curse || curse) && (status != FakeStatus.Petrify || petrify); }
+    public void RPC_ApplyStatusesFromFloatArray(float[] deltas, FakeMessageInfo info) { }
     public static int ThornCalls;
     public static int AfflictionCalls;
-    public static void ClearAll() { FakePlayerCharacter.ClearAllCalls++; FakePlayerCharacter.localCharacter.HasDebuff = false; }
+    public static void ClearAll() { FakePlayerCharacter.ClearAllCalls++; FakePlayerCharacter.localCharacter.HasDebuff = false; FakePlayerCharacter.localCharacter.HasCurse = false; }
     public void RemoveAllThorns() { ThornCalls++; }
     public void ClearAllAfflictions() { AfflictionCalls++; }
 }
@@ -76,6 +84,9 @@ internal class FakePlayerCharacter
     public PlayerVector LastLivingPosition { get; set; }
     public float stamina = 0.25f;
     public bool HasDebuff = true;
+    public bool HasCurse = true;
+    public float GetMaxStamina() { return HasDebuff || HasCurse ? 0.25f : 1f; }
+    public void AddStamina(float value) { stamina = Math.Min(GetMaxStamina(), stamina + value); }
     public static int ClearAllCalls;
     public FakePlayerCharacter() { IsPlayerControlled = true; IsRegisteredToPlayer = true; photonView.IsMine = true; }
     private void RPCA_ReviveAtPosition(PlayerVector position, bool applyStatus, int segment) { }

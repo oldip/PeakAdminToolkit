@@ -43,6 +43,20 @@ internal static class HornHudTests
         Check(!(bool)module.GetProperty("Available", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(missing, null),
             "missing HUD API disables only horn correction");
         missing.Dispose();
+        var logs = new System.Collections.Generic.List<string>();
+        character.refs.items.currentSelectedSlot.IsSome = true;
+        character.data.currentItem = new Item { bugle = new MagicBugle { currentFuel = 2, totalTootTime = 10 }, ThrowOnRead = true };
+        var recovering = (IDisposable)constructor.Invoke(new object[] { new Func<string, Type>(Resolve), new Action<string>(logs.Add), new Func<bool>(() => true) });
+        MethodInfo postfix = module.GetMethod("Postfix", BindingFlags.Static | BindingFlags.NonPublic);
+        postfix.Invoke(null, new object[] { gui });
+        Check((bool)module.GetProperty("Available", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(recovering, null), "temporary held-item exception keeps correction active");
+        Check(logs.Count == 1 && logs[0].Contains("transient held-item error"), "frame warning identifies underlying exception");
+        postfix.Invoke(null, new object[] { gui });
+        Check(logs.Count == 1, "identical frame errors are not spammed");
+        character.data.currentItem.ThrowOnRead = false;
+        postfix.Invoke(null, new object[] { gui });
+        Check(Math.Abs(gui.items[1].fuelBarFill.fillAmount - 0.2f) < 0.0001f, "horn HUD recovers on next valid frame");
+        recovering.Dispose();
 #if REAL_HARMONY
         TestRealHook(module, character, gui);
 #endif

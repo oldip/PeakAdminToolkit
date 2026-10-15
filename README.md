@@ -1,4 +1,4 @@
-# PEAK Admin Toolkit 0.8.2
+# PEAK Admin Toolkit 0.8.3
 
 [繁體中文](README.zh-TW.md) · [Downloads](https://github.com/oldip/PeakAdminToolkit/releases) · [Contributing](CONTRIBUTING.md)
 
@@ -12,11 +12,16 @@ English, Simplified Chinese and Traditional Chinese are supported.
 | Overview | Current language and Host/Client status |
 | Items | Item cards, game icons, categories, multilingual search and generation |
 | Self tools | God Mode, infinite stamina, flight, fall protection and negative-status cleanup |
-| Players | Normal/no-penalty revival, both teleport directions and selected dropped-item recovery |
+| Players | Normal/no-penalty revival, complete revival controls, teleport and dropped-item recovery |
 | World | Time-of-day presets and whole-team travel to the next-area campfire, summit or Void exit portal |
 
 Host and Client can request item generation, revival and teleport. Self tools
-apply to the local character. Dropped-item recovery and World controls require Host.
+apply to the local character. Dropped-item recovery requires Host. Time and team-travel requests are available to Host and Client.
+
+Own complete revival clears curse/curable statuses and refills base stamina.
+Remote complete revival is experimental: it submits native revival/status requests,
+but status cleanup accepts Host requests only and remote stamina refill is unconfirmed.
+Time presets are 05:00, 13:00, 21:00 and 01:00.
 
 No-penalty revival skips new curse/hunger; it does not guarantee full stamina or
 removal of existing statuses. Flight keeps collision and grants fall protection
@@ -27,7 +32,7 @@ Special variants, unused items and lobby toys are available through the Other fi
 ## Install
 
 1. Install BepInEx for PEAK.
-2. Download and extract `PeakAdminToolkit-0.8.2.zip` from Releases.
+2. Download and extract `PeakAdminToolkit-0.8.3.zip` from Releases.
 3. Close PEAK and place `PeakAdminToolkit.dll` in `BepInEx/plugins`.
 4. Launch PEAK and press F8. Keep one toolkit version installed.
 

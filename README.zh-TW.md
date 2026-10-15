@@ -1,4 +1,4 @@
-# PEAK Admin Toolkit 0.8.2
+# PEAK Admin Toolkit 0.8.3
 
 [English](README.md) · [下載](https://github.com/oldip/PeakAdminToolkit/releases) · [翻譯貢獻](docs/CONTRIBUTING.zh-TW.md)
 
@@ -12,11 +12,15 @@ PEAK 的 BepInEx 管理工具。按 **F8** 開啟介面，視窗依解析度縮�
 | 概覽 | 目前語言與 Host／Client 狀態 |
 | 物品 | 物品卡片、遊戲圖示、分類、多語言搜尋與生成 |
 | 自身工具 | 無敵、無限體力、飛行、免摔傷、清除負面狀態 |
-| 玩家 | 正常／無懲罰復活、雙向傳送、勾選掉落物找回 |
+| 玩家 | 正常／無懲罰復活、完全重生操作、傳送與掉落物找回 |
 | 世界 | 當天時刻調整、全隊傳送至下一區營火旁、山頂或地深冥淵出口 |
 
 Host、Client 都可提出生成、復活與傳送請求；自身工具只作用於自己。
-掉落物找回與世界操作需要 Host。
+掉落物找回需要 Host；時刻與全隊傳送請求支援 Host／Client。
+
+自身完全重生清除詛咒、可清除狀態並補滿基本體力。
+朋友的完全重生為實驗：送出原生復活與狀態請求，清狀態只接受房主，遠端體力恢復未確認。
+時刻按鈕為 05:00、13:00、21:00、01:00。
 
 無懲罰復活略過新增詛咒與飢餓，不保證補滿體力或移除既有狀態。
 飛行保留碰撞，飛行中及結束後兩秒免摔傷。全隊跳區不會點燃營火；地深冥淵可傳送至出口傳送門旁，再自行進入。
@@ -25,7 +29,7 @@ Host、Client 都可提出生成、復活與傳送請求；自身工具只作用
 ## 安裝
 
 1. 安裝 PEAK 的 BepInEx。
-2. 從 Releases 下載 `PeakAdminToolkit-0.8.2.zip` 並解壓。
+2. 從 Releases 下載 `PeakAdminToolkit-0.8.3.zip` 並解壓。
 3. 關閉 PEAK，將 `PeakAdminToolkit.dll` 放入 `BepInEx/plugins`。
 4. 啟動遊戲，按 F8。只保留一個工具版本。
 

@@ -19,13 +19,13 @@ namespace PeakAdminToolkit.World
             {
                 Type network = resolve("Photon.Pun.PhotonNetwork");
                 if (network == null) return "WorldTimeApiUnavailable";
-                if (!ReadBool(network, "InRoom") || !ReadBool(network, "IsMasterClient"))
-                    return "WorldHostRequired";
+                if (!ReadBool(network, "InRoom"))
+                    return "WorldRoomRequired";
                 Type game = resolve("GameHandler");
                 if (game == null || !ReadBool(game, "IsInGameplayScene")) return "WorldGameplayRequired";
                 Type day = resolve("DayNightManager");
                 FieldInfo midnight = day == null ? null : day.GetField("passedMidnight", BindingFlags.NonPublic | BindingFlags.Instance);
-                if (DayInstance(day) == null ||
+                if (TimeSyncMethod(day) == null || DayInstance(day) == null ||
                     day.GetMethod("SetTimeOfDay", BindingFlags.Public | BindingFlags.Static, null, new[] { typeof(float) }, null) == null ||
                     midnight == null || midnight.FieldType != typeof(bool))
                     return "WorldTimeApiUnavailable";
@@ -38,10 +38,10 @@ namespace PeakAdminToolkit.World
             float hour;
             switch (preset)
             {
-                case TimePreset.Morning: hour = 7f; break;
-                case TimePreset.Noon: hour = 12f; break;
-                case TimePreset.Evening: hour = 18f; break;
-                case TimePreset.Midnight: hour = 0f; break;
+                case TimePreset.Morning: hour = 5f; break;
+                case TimePreset.Noon: hour = 13f; break;
+                case TimePreset.Evening: hour = 21f; break;
+                case TimePreset.Midnight: hour = 1f; break;
                 default: return false;
             }
             if (!CanSet()) return false;
@@ -49,8 +49,11 @@ namespace PeakAdminToolkit.World
             {
                 Type day = resolve("DayNightManager");
                 FieldInfo midnight = day == null ? null : day.GetField("passedMidnight", BindingFlags.NonPublic | BindingFlags.Instance);
-                day.GetMethod("SetTimeOfDay", BindingFlags.Public | BindingFlags.Static, null,
-                    new[] { typeof(float) }, null).Invoke(null, new object[] { hour });
+                object instance = DayInstance(day);
+                object view = day.GetField("photonView", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).GetValue(instance);
+                int count = (int)day.GetField("dayCount", BindingFlags.Public | BindingFlags.Instance).GetValue(instance);
+                object all = Enum.Parse(resolve("Photon.Pun.RpcTarget"), "All");
+                TimeSyncMethod(day).Invoke(view, new object[] { "RPCA_SyncTime", all, new object[] { count, hour } });
                 midnight.SetValue(DayInstance(day), false);
                 return true;
             }
@@ -73,6 +76,21 @@ namespace PeakAdminToolkit.World
                 return true;
             }
             catch (Exception) { return false; }
+        }
+
+        private MethodInfo TimeSyncMethod(Type day)
+        {
+            if (day == null) return null;
+            object instance = DayInstance(day);
+            FieldInfo field = day.GetField("photonView", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            object view = field == null || instance == null ? null : field.GetValue(instance);
+            if (view == null) return null;
+            PropertyInfo property = view.GetType().GetProperty("ViewID");
+            FieldInfo id = view.GetType().GetField("ViewID");
+            object value = property != null ? property.GetValue(view, null) : id == null ? null : id.GetValue(view);
+            if (value == null || Convert.ToInt32(value) <= 0) return null;
+            Type target = resolve("Photon.Pun.RpcTarget");
+            return target == null ? null : view.GetType().GetMethod("RPC", new[] { typeof(string), target, typeof(object[]) });
         }
 
         private bool IsHostInGameplay()
