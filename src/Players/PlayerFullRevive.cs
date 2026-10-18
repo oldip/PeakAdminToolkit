@@ -37,17 +37,13 @@ namespace PeakAdminToolkit.Players
         {
             try
             {
-                if (!directory.CanRequestPlayerRpc || !directory.IsCurrent(entry) || !directory.CanSend(entry.Character)) return false;
+                if (!directory.CanRequestPlayerRpc || !directory.IsCurrent(entry) || !ReferenceEquals(entry.Character, directory.Local()) ||
+                    !directory.CanSend(entry.Character)) return false;
                 if (directory.Dead(entry.Character))
                 {
                     if (!revive.CanRequest(entry)) return false;
                 }
                 else if (directory.PassedOut(entry.Character) && wake == null) return false;
-                if (!ReferenceEquals(entry.Character, directory.Local()))
-                {
-                    float[] deltas;
-                    return NativeReviveStatusRequest.TryPrepare(entry.Character, out deltas);
-                }
                 return Available && (bool)PlayerDirectory.ReadMember(PlayerDirectory.ReadMember(entry.Character, "photonView"), "IsMine");
             }
             catch (Exception) { return false; }
@@ -58,12 +54,6 @@ namespace PeakAdminToolkit.Players
             if (!CanRequest(entry)) return false;
             try
             {
-                if (!ReferenceEquals(entry.Character, directory.Local()))
-                {
-                    float[] deltas;
-                    if (!NativeReviveStatusRequest.TryPrepare(entry.Character, out deltas) || !PrepareState(entry)) return false;
-                    return directory.Send(entry.Character, "RPC_ApplyStatusesFromFloatArray", (object)deltas);
-                }
                 if (!PrepareState(entry) || directory.Dead(entry.Character) || !cleanse.Request(entry)) return false;
                 float amount = (float)maximum.Invoke(entry.Character, null);
                 if (amount <= 0 || float.IsNaN(amount) || float.IsInfinity(amount)) return false;

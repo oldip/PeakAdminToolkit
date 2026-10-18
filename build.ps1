@@ -36,7 +36,7 @@ $sources = @('src\Properties\AssemblyInfo.cs','src\Plugin.cs','src\Core\Config.c
 $sources += @('src\Self\SelfApi.cs','src\Self\SelfFeature.cs','src\Self\SelfTools.cs','src\Self\GodMode.cs','src\Self\InfiniteStamina.cs','src\Self\NoFallDamage.cs','src\Self\Flight.cs','src\Self\FlightMotion.cs','src\UI\SelfToolsPanel.cs')
 $sources += @('src\Players\PlayerDirectory.cs','src\Players\PlayerLanding.cs','src\Players\LandingClearance.cs','src\Players\PlayerRevive.cs','src\Players\PlayerTeleport.cs','src\UI\UnityPlayerLanding.cs','src\UI\PlayerPanel.cs')
 $sources += 'src\Core\RoomRoleReader.cs'
-$sources += @('src\Players\PlayerNoPenaltyRevive.cs','src\Players\PlayerFullRevive.cs','src\Players\NativeReviveStatusRequest.cs')
+$sources += @('src\Players\PlayerNoPenaltyRevive.cs','src\Players\PlayerFullRevive.cs')
 $sources += 'src\Players\PlayerCleanse.cs'
 $sources += @('src\World\WorldTime.cs','src\World\WorldAdvance.cs','src\World\WorldVoidEndpoint.cs','src\World\WorldWarpBatch.cs','src\World\WorldDestinationTeleport.cs','src\UI\WorldPanel.cs')
 $sources += @('src\Players\DroppedItemHistory.cs','src\Players\DroppedItemRecovery.cs','src\Core\DroppedItemCapture.cs')
@@ -45,7 +45,7 @@ foreach ($source in $sources) {
     if (-not (Test-Path -LiteralPath $path)) { throw "Missing source file: $source" }
     $arguments += $path
 }
-Write-Host '[INFO] Building PEAK Admin Toolkit 0.8.4 (embedded descriptions and interface translations; no character dictionaries or images)'
+Write-Host '[INFO] Building PEAK Admin Toolkit 1.0.0 (embedded descriptions and interface translations; no character dictionaries or images)'
 & $compiler @arguments
 if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $output)) { throw "Build failed (exit $LASTEXITCODE)." }
 Write-Host "[OK] Built $output" -ForegroundColor Green

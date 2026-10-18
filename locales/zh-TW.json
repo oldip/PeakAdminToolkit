@@ -1,6 +1,6 @@
 {
   "Heading": "管理工具",
-  "Foundation": "0.8.4 預覽版",
+  "Foundation": "1.0.0",
   "RoomRoleLabel": "房間身分：{0}",
   "RoomRoleHost": "房主（Host）",
   "RoomRoleClient": "一般玩家（Client）",
@@ -18,7 +18,7 @@
   "Saved": "語言偏好已儲存。",
   "Close": "關閉",
   "CloseHelp": "關閉視窗並返回遊戲操作。",
-  "NoGameplay": "本預覽版尚未提供遊戲管理功能。",
+  "NoGameplay": "目前無法使用遊戲管理功能。",
   "LanguageUnavailable": "無法讀取 PEAK 語言。自動模式暫時使用英語。",
   "Overview": "概覽",
   "Items": "物品",
@@ -162,7 +162,5 @@
   "WorldEndpointSubmitted": "已送出終點傳送請求，請自行進入傳送門。",
   "WorldEndpointUnavailable": "終點傳送門、安全落點或玩家傳送不可用；請查看 BepInEx 日誌。",
   "PlayerFullRevive": "完全重生",
-  "PlayerFullReviveScope": "隨時可用：存活只恢復、昏迷先喚醒、死亡才復活。自己清除詛咒並補滿可用體力；遠端為實驗，清狀態需房主，體力待確認。",
-  "PlayerFullReviveExperimental": "完全重生（實驗）",
-  "PlayerFullReviveRemoteSubmitted": "已送出原生恢復請求；完整恢復未確認，請檢查詛咒、負面狀態及體力。"
+  "PlayerFullReviveScope": "自己的完全重生：清除詛咒及可清除狀態，並補滿可用體力。存活時保留裝備，昏迷時先喚醒，死亡時使用原生復活。"
 }

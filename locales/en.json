@@ -1,6 +1,6 @@
 {
   "Heading": "Admin Toolkit",
-  "Foundation": "0.8.4 preview",
+  "Foundation": "1.0.0",
   "RoomRoleLabel": "Room role: {0}",
   "RoomRoleHost": "Host",
   "RoomRoleClient": "Client",
@@ -18,7 +18,7 @@
   "Saved": "Language preference saved.",
   "Close": "Close",
   "CloseHelp": "Close the window and return control to the game.",
-  "NoGameplay": "Gameplay tools are not available in this preview.",
+  "NoGameplay": "Gameplay tools are currently unavailable.",
   "LanguageUnavailable": "PEAK language could not be read. Auto currently uses English.",
   "Overview": "Overview",
   "Items": "Items",
@@ -162,7 +162,5 @@
   "WorldEndpointSubmitted": "Endpoint warp requests sent. Enter the portal yourselves.",
   "WorldEndpointUnavailable": "Active endpoint portal, safe ground or player warp unavailable. Check the BepInEx log.",
   "PlayerFullRevive": "Full recovery",
-  "PlayerFullReviveScope": "Available at any time: recover while alive, wake if unconscious, revive only if dead. Own recovery clears curse/statuses and refills usable stamina. Remote cleanup is experimental, accepts Host requests only, and does not confirm stamina refill.",
-  "PlayerFullReviveExperimental": "Full recovery (test)",
-  "PlayerFullReviveRemoteSubmitted": "Native recovery requests sent. Full recovery is unconfirmed; check curse, negative effects and stamina."
+  "PlayerFullReviveScope": "Own full recovery: clear curse and curable effects, and refill usable stamina. Living recovery keeps equipment; unconscious recovery wakes first; dead characters use native revival."
 }

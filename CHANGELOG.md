@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.0
+
+- First stable release.
+- Remove experimental remote full recovery from player cards and its native status requests.
+- Keep own full recovery and normal/no-penalty revival for players.
+- Client time adjustment and whole-team endpoint travel verified in multiplayer.
+
 ## 0.8.4
 
 - Full recovery is available while alive, injured, cursed, unconscious or dead.

@@ -145,37 +145,26 @@ internal static class PlayerTests
             Check(ReferenceEquals(held, self.refs.items.HeldItem) && ReferenceEquals(backpack, self.refs.items.Backpack), "alive inventory is preserved " + state);
         }
         self.data.fullyPassedOut = false;
-        friend.data.dead = true;
-        friend.photonView.IsMine = false;
-        Check((bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[1] }), "Client can attempt remote complete revival through native requests");
         int selfClears = FakePlayerCharacter.ClearAllCalls;
         self.HasDebuff = true; self.HasCurse = true; self.stamina = 0.3f;
-        Check((bool)fullType.GetMethod("Request", flags).Invoke(full, new object[] { players[1] }), "remote revival and status requests are submitted");
-        int last = friend.photonView.Calls.Count - 1;
-        Check(friend.photonView.Calls[last - 1] == "RPCA_ReviveAtPosition" && friend.photonView.Calls[last] == "RPC_ApplyStatusesFromFloatArray", "remote native revival precedes native status request");
-        Check(friend.photonView.LastArguments.Length == 1 && friend.photonView.LastArguments[0] is float[], "status RPC receives one float array argument");
-        var deltas = (float[])friend.photonView.LastArguments[0];
-        Check(deltas[(int)FakeStatus.Curse] <= -1 && deltas[(int)FakeStatus.Petrify] <= -1, "remote request includes curse and petrify");
-        Check(deltas[(int)FakeStatus.Cold] == -2.5f && deltas[(int)FakeStatus.Shield] == 0 && deltas[(int)FakeStatus.Crab] == 0, "native curability rules and actual status magnitude are retained");
-        Check(Array.TrueForAll(deltas, value => value <= 0), "cleanup request never adds a status");
-        Check(FakePlayerCharacter.ClearAllCalls == selfClears && self.HasDebuff && self.HasCurse && self.stamina == 0.3f, "remote request never clears operator or writes replica stamina");
-        FakeNetwork.IsMasterClient = true;
-        Check((bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[1] }), "Host can also attempt remote complete revival");
-        int calls = friend.photonView.Calls.Count;
-        friend.refs.afflictions.ThrowOnRead = true;
-        Check(!(bool)fullType.GetMethod("Request", flags).Invoke(full, new object[] { players[1] }) && friend.photonView.Calls.Count == calls, "status preparation failure sends no partial revive request");
-        friend.refs.afflictions.ThrowOnRead = false;
+        object friendHeld = friend.refs.items.HeldItem, friendBackpack = friend.refs.items.Backpack;
+        for (int role = 0; role < 2; role++)
+        {
+            FakeNetwork.IsMasterClient = role == 0;
+            for (int state = 0; state < 3; state++)
+            {
+                friend.data.dead = state == 2;
+                friend.data.fullyPassedOut = state == 1;
+                friend.photonView.IsMine = false;
+                int calls = friend.photonView.Calls.Count;
+                Check(!(bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[1] }), "remote full recovery unavailable for role/state " + role + "/" + state);
+                Check(!(bool)fullType.GetMethod("Request", flags).Invoke(full, new object[] { players[1] }), "remote full recovery rejected for role/state " + role + "/" + state);
+                Check(friend.photonView.Calls.Count == calls, "rejected recovery sends no wake, revival or cleanup RPC " + role + "/" + state);
+            }
+        }
+        Check(FakePlayerCharacter.ClearAllCalls == selfClears && self.HasDebuff && self.HasCurse && self.stamina == 0.3f, "rejected remote recovery never modifies the operator");
+        Check(ReferenceEquals(friendHeld, friend.refs.items.HeldItem) && ReferenceEquals(friendBackpack, friend.refs.items.Backpack), "rejected remote recovery leaves friend inventory untouched");
         friend.data.dead = false; friend.data.fullyPassedOut = false;
-        held = friend.refs.items.HeldItem; backpack = friend.refs.items.Backpack;
-        calls = friend.photonView.Calls.Count;
-        FakeNetwork.IsMasterClient = false;
-        Check((bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[1] }), "Client can attempt recovery for living friend");
-        Check((bool)fullType.GetMethod("Request", flags).Invoke(full, new object[] { players[1] }), "living friend receives status request");
-        Check(friend.photonView.Calls.Count == calls + 1 && friend.photonView.Calls[calls] == "RPC_ApplyStatusesFromFloatArray", "living friend does not receive revival or wake");
-        friend.data.fullyPassedOut = true; calls = friend.photonView.Calls.Count;
-        Check((bool)fullType.GetMethod("Request", flags).Invoke(full, new object[] { players[1] }), "unconscious friend can receive native recovery requests");
-        Check(friend.photonView.Calls.Count == calls + 2 && friend.photonView.Calls[calls] == "RPCA_UnPassOut" && friend.photonView.Calls[calls + 1] == "RPC_ApplyStatusesFromFloatArray", "remote wake precedes status cleanup without revival");
-        Check(ReferenceEquals(held, friend.refs.items.HeldItem) && ReferenceEquals(backpack, friend.refs.items.Backpack), "friend inventory is preserved");
         FakeNetwork.InRoom = false;
         Check(!(bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[0] }) && !(bool)fullType.GetMethod("CanRequest", flags).Invoke(full, new object[] { players[1] }), "recovery remains unavailable outside room");
         FakeNetwork.InRoom = true;

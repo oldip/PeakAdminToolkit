@@ -56,8 +56,8 @@ namespace PeakAdminToolkit.UI
                 GUILayout.BeginHorizontal();
                 ActionButton(revive.CanRequest(entry), "PlayerRevive", () => revive.Request(entry), entry.Name, theme, text, toast);
                 ActionButton(cleanRevive.CanRequest(entry), "PlayerNoPenaltyRevive", () => cleanRevive.Request(entry), entry.Name, theme, text, toast);
-                ActionButton(fullRevive.CanRequest(entry), self ? "PlayerFullRevive" : "PlayerFullReviveExperimental", () => fullRevive.Request(entry), entry.Name, theme, text, toast,
-                    self ? null : "PlayerFullReviveRemoteSubmitted");
+                if (self)
+                    ActionButton(fullRevive.CanRequest(entry), "PlayerFullRevive", () => fullRevive.Request(entry), entry.Name, theme, text, toast);
                 GUILayout.EndHorizontal();
                 if (!self)
                 {
@@ -108,15 +108,14 @@ namespace PeakAdminToolkit.UI
         }
 
         private static void ActionButton(bool allowed, string label, Func<bool> request, string name,
-            Theme theme, Localization text, Toast toast, string successKey = null, string failureKey = null)
+            Theme theme, Localization text, Toast toast)
         {
             bool previous = GUI.enabled;
             try
             {
                 GUI.enabled = previous && allowed;
                 if (GUILayout.Button(text.Text(label), theme.Button, GUILayout.Width(165)))
-                    toast.Show(request() ? (successKey == null ? text.Format("PlayerRequestSubmitted", name) : text.Text(successKey))
-                        : text.Text(failureKey ?? "PlayerRequestFailed"),
+                    toast.Show(request() ? text.Format("PlayerRequestSubmitted", name) : text.Text("PlayerRequestFailed"),
                         Time.unscaledTimeAsDouble, 3.0);
             }
             finally { GUI.enabled = previous; }

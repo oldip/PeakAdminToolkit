@@ -53,14 +53,8 @@ internal sealed class FakePlayerData
     public bool dead { get; set; }
     public bool fullyPassedOut;
 }
-internal enum FakeStatus { Injury, Hunger, Cold, Poison, Shield, Curse, Drowsy, Crab, Weight = 9, Arrow = 12, Petrify = 13 }
-internal struct FakeMessageInfo { }
 internal sealed class FakeAfflictions
 {
-    public bool ThrowOnRead = false;
-    public float GetCurrentStatus(FakeStatus status) { if (ThrowOnRead) throw new InvalidOperationException("status unavailable"); return status == FakeStatus.Cold ? 2.5f : 0.4f; }
-    private bool StatusIsCurable(FakeStatus status, bool curse, bool petrify) { return status != FakeStatus.Shield && status != FakeStatus.Crab && status != FakeStatus.Weight && status != FakeStatus.Arrow && (status != FakeStatus.Curse || curse) && (status != FakeStatus.Petrify || petrify); }
-    public void RPC_ApplyStatusesFromFloatArray(float[] deltas, FakeMessageInfo info) { }
     public static int ThornCalls;
     public static int AfflictionCalls;
     public static void ClearAll() { FakePlayerCharacter.ClearAllCalls++; FakePlayerCharacter.localCharacter.HasDebuff = false; FakePlayerCharacter.localCharacter.HasCurse = false; }
