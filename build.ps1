@@ -45,7 +45,7 @@ foreach ($source in $sources) {
     if (-not (Test-Path -LiteralPath $path)) { throw "Missing source file: $source" }
     $arguments += $path
 }
-Write-Host '[INFO] Building PEAK Admin Toolkit 1.0.0 (embedded descriptions and interface translations; no character dictionaries or images)'
+Write-Host '[INFO] Building PEAK Admin Toolkit 1.0.1 (embedded descriptions and interface translations; no character dictionaries or images)'
 & $compiler @arguments
 if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $output)) { throw "Build failed (exit $LASTEXITCODE)." }
 Write-Host "[OK] Built $output" -ForegroundColor Green

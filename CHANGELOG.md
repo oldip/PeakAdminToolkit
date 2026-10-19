@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1
+
+- Exclude voluntary hand drops and throws from dropped-item recovery by honoring PEAK's automatic-drop flag.
+- Keep automatic drops available without a short recovery timeout.
+- Report capture-test failures in the console instead of an unhandled exception dialog.
+
 ## 1.0.0
 
 - First stable release.

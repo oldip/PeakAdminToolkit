@@ -1,4 +1,4 @@
-# PEAK Admin Toolkit 1.0.0
+# PEAK Admin Toolkit 1.0.1
 
 [English](README.md) · [下載](https://github.com/oldip/PeakAdminToolkit/releases) · [翻譯貢獻](docs/CONTRIBUTING.zh-TW.md)
 
@@ -16,7 +16,8 @@ PEAK 的 BepInEx 管理工具。按 **F8** 開啟介面，視窗依解析度縮�
 | 世界 | 當天時刻調整、全隊傳送至下一區營火旁、山頂或地深冥淵出口 |
 
 Host、Client 都可提出生成、復活與傳送請求；自身工具只作用於自己。
-掉落物找回需要 Host；時刻與全隊傳送請求支援 Host／Client。
+掉落物找回需要 Host，只列出昏迷／死亡時自動掉落且仍在地上的物品，不包含主動丟棄的物品。
+時刻與全隊傳送請求支援 Host／Client。
 
 自己的完全重生在正常、受傷、詛咒、昏迷或死亡時均可使用。
 自己可清除詛咒與可清除狀態，補滿可用體力。存活／昏迷恢復保留手持物與背包；
@@ -30,7 +31,7 @@ Host、Client 都可提出生成、復活與傳送請求；自身工具只作用
 ## 安裝
 
 1. 安裝 PEAK 的 BepInEx。
-2. 從 Releases 下載 `PeakAdminToolkit-1.0.0.zip` 並解壓。
+2. 從 Releases 下載 `PeakAdminToolkit-1.0.1.zip` 並解壓。
 3. 關閉 PEAK，將 `PeakAdminToolkit.dll` 放入 `BepInEx/plugins`。
 4. 啟動遊戲，按 F8。只保留一個工具版本。
 

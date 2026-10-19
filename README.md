@@ -1,4 +1,4 @@
-# PEAK Admin Toolkit 1.0.0
+# PEAK Admin Toolkit 1.0.1
 
 [繁體中文](README.zh-TW.md) · [Downloads](https://github.com/oldip/PeakAdminToolkit/releases) · [Contributing](CONTRIBUTING.md)
 
@@ -16,7 +16,8 @@ English, Simplified Chinese and Traditional Chinese are supported.
 | World | Time-of-day presets and whole-team travel to the next-area campfire, summit or Void exit portal |
 
 Host and Client can request item generation, revival and teleport. Self tools
-apply to the local character. Dropped-item recovery requires Host. Time and team-travel requests are available to Host and Client.
+apply to the local character. Dropped-item recovery requires Host and includes automatic
+unconsciousness/death drops still on the ground; voluntarily discarded items are excluded. Time and team-travel requests are available to Host and Client.
 
 Own full recovery works while healthy, injured, cursed, unconscious or dead. Own
 recovery clears curse/curable statuses and refills usable stamina. Living and
@@ -33,7 +34,7 @@ Special variants, unused items and lobby toys are available through the Other fi
 ## Install
 
 1. Install BepInEx for PEAK.
-2. Download and extract `PeakAdminToolkit-1.0.0.zip` from Releases.
+2. Download and extract `PeakAdminToolkit-1.0.1.zip` from Releases.
 3. Close PEAK and place `PeakAdminToolkit.dll` in `BepInEx/plugins`.
 4. Launch PEAK and press F8. Keep one toolkit version installed.
 

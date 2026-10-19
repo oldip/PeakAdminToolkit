@@ -34,10 +34,10 @@ namespace PeakAdminToolkit.Players
             catch (Exception ex) { Fail(ex); }
         }
 
-        private static void DropPrefix(object __instance, out object __state)
+        private static void DropPrefix(object __instance, bool cacheToDroppedItems, out object __state)
         {
             __state = currentOwner;
-            try { currentOwner = __instance.GetType().GetField("character", Members).GetValue(__instance); }
+            try { currentOwner = cacheToDroppedItems ? __instance.GetType().GetField("character", Members).GetValue(__instance) : null; }
             catch (Exception) { currentOwner = null; }
         }
 
